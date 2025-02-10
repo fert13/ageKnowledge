@@ -78,7 +78,6 @@ class Player_Piece {
 
         this.initialPosition = position; //To return the piece to the board when killed
     }
-
     unlockPiece() {
         this.status = 1; //1 Means unlocked
         this.position = this.gameEntry;
