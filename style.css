@@ -378,8 +378,9 @@ canvas{
 }
 
 #homePage button:hover{
-    background: #42210b;
-    border-color: #754c24;
+    background: white;
+    border-color: white;
+    color: #42210b;
 }
 
 #cp{
@@ -425,3 +426,9 @@ canvas{
 .error { background: red; }
 .info { background-color: #00acff;}
 .warning { background-color: var(--yellow);}
+
+
+.logo {
+    width: 300px;
+    height: auto
+}
