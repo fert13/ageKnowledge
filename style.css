@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --red: #fa0000;
-    --green: #009a2a;
-    --yellow: #fee800;
-    --blue: #00acff;
+    --red: #42210b;
+    --green: #42210b;
+    --yellow: #42210b;
+    --blue: #42210b;
 }
 
 * {
@@ -15,19 +15,92 @@
 
 body{
     background: radial-gradient(circle, #754c24 0%,#42210b 100%);
-}
-
-.ludoContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    width: 100%;
     height: 100vh;
 }
 
 
+/* Sidebar */
+#sidebar {
+    background-color: #2c3e50;
+    color: #fff;
+    width: 20%; /* Adjust width to 25% of the container */
+    height: 100vh; /* Full viewport height */
+    padding: 20px;
+    overflow-y: auto;
+    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center /* Align content to the top */
+}
+
+#sidebarHeader h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+
+/* Navbar */
+#navbar {
+    width: 100%;
+    background-color: #34495e;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.hamburger {
+    font-size: 24px;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    justify-items: flex-end
+}
+
+/* Ludo board container */
+.ludoContainer {
+    width: 80%; /* Adjust width to 75% of the container */
+    height: 100vh; /* Full viewport height */
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    align-items: center ;
+    gap: 30px;
+    perspective: 800px;
+}
+
+
 #ludoBoard {
+    transform: rotateX(45deg) rotateY(0deg);
+    transform-style: preserve-3d;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    border: 5px solid #754c24;
     max-width: 500px;
     max-height: 500px;
     width: 100%;
@@ -147,6 +220,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    transform: translateZ(5px);
 }
 
 .ludoBox .fa-location-pin{
@@ -257,7 +332,6 @@ body{
     font-weight: 600;
     font-size: 9px;
     color: white;
-    background: #00acff;
     border-radius: 50%;
     padding: 3px;
     -webkit-text-stroke-width: 0px;
@@ -295,6 +369,23 @@ body{
     border-radius: 14px;
     margin-top: 12px;
     background: #111;
+}
+
+
+#rollDice {
+    transition: transform 2s ease-out; /* Animation de transformation */
+}
+
+@keyframes rollDiceAnimation {
+    0% {
+        transform: rotate(0deg); /* Départ sans rotation */
+    }
+    50% {
+        transform: rotate(720deg); /* Demi-tour pour simuler l'animation */
+    }
+    100% {
+        transform: rotate(1440deg); /* Deux tours complets */
+    }
 }
 
 
@@ -395,40 +486,149 @@ canvas{
 
 .card {
     background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color:#42210b;
     text-align: center;
-    max-width: 400px;
+    max-width: 300px;
+    border-width: 20px;
+    border-style: solid;
+    border-image: url('Assets/image2.png') 30 stretch; /* Bordure avec l'image */
 }
+
 .options {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
+     /* Fond chocolat */
+    padding: 10px;
 }
+
 .options button {
     padding: 10px;
     cursor: pointer;
+    background-color: #3E2723;
+    color: white;
+
+    &:hover {
+      background-color: #633f38;  
+    }
 }
 
+/* Style de base pour la notification */
 .notification {
     position: fixed;
     top: 20px;
-    padding: 10px 20px;
-    border-radius: 5px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
     color: white;
     font-weight: bold;
-    display: none;
+    display: none; /* Pour que la notification soit cachée au début */
+    font-size: 16px;
+    z-index: 100;
+    max-width: 300px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.success { background: green; }
-.error { background: red; }
-.info { background-color: #00acff;}
-.warning { background-color: var(--yellow);}
 
+/* Icône de notification */
+.notification-icon {
+    margin-right: 10px;
+}
+
+/* Icone de fermeture */
+.close-btn {
+    background: none;
+    color: white;
+    font-size: 20px;
+    border: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* Styles pour chaque type de notification */
+.success {
+    background-color: green;
+}
+
+.error {
+    background-color: red;
+}
+
+.info {
+    background-color: #00acff;
+}
+
+.warning {
+    background-color: yellow;
+    color: black;
+}
+
+/* Animation pour faire apparaître la notification */
+.notification.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Styles supplémentaires pour les petites notifications */
+#dangerNumberDisplay {
+    color: white;
+    font-size: 30px;
+}
+
+/* Ajout d'un effet de survol pour le bouton de fermeture */
+.close-btn:hover {
+    color: #ddd;
+}
 
 .logo {
     width: 300px;
     height: auto
 }
+
+.symbolCard {
+    width: 120px;
+    height: 180px;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid black;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-family: "Arial", sans-serif;
+    position: relative;
+}
+
+.corner {
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+}
+
+.top-left {
+    top: 5px;
+    left: 5px;
+    text-align: left;
+}
+
+.bottom-right {
+    bottom: 5px;
+    right: 5px;
+    text-align: right;
+    transform: rotate(180deg);
+}
+
+.center {
+    font-size: 50px;
+}
+
+
+

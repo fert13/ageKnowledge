@@ -11,7 +11,7 @@ const yellow_Board = document.getElementById("yellow-Board");
 //DOMs
 const rollDiceButton = document.getElementById('rollDiceButton');
 const rollDice = document.getElementById('rollDice');
-const cardQuestions = document.getElementById('card');
+const cardQuestions = document.getElementById('card')
 
 
 //Initial Variables;
@@ -20,7 +20,6 @@ let currentIndex=0;
 let currentPlayerTurnIndex = 0;
 let prevPlayerTurnIndex;
 let currentPlayerTurnStatus = true; 
-let dangerBonus= localStorage.getItem('localStorage');
 let teamHasBonus = false; 
 let hasAnswer = false;
 const questions = [
@@ -59,8 +58,6 @@ let safePaths = [
     ...homePathEntries.yellow,
     ...homePathEntries.green
 ];
-
-let dangerPaths = ['r9','b9','y9','g9']
 
 let homePathArray = [
     ...homePathEntries.blue,
@@ -186,61 +183,18 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 
 
-// function showNotification(message, type) {
-//             const notification = document.getElementById("notification");
-//             notification.textContent = message;
-//             notification.className = `notification ${type}`;
-//             notification.style.display = "block";
-//             setTimeout(() => {
-//                 notification.style.display = "none";
-//             }, 2000);
-// }
 
 
-// Fonction pour afficher la notification
-function showNotification(message,type) {
-    const notification = document.getElementById('notification');
-    const icon = document.getElementById('notificationIcon');
-    const text = document.getElementById('notificationText');
-    
-    // Définir le type de notification (success, error, info, warning)
-    notification.classList.remove('success', 'error', 'info', 'warning');
-    notification.classList.add(type);
-    
-    // Définir le texte de la notification
-    text.textContent = message;
-    
-    // Définir l'icône en fonction du type
-    switch(type) {
-        case 'success':
-            icon.innerHTML = '<i class="fa fa-check-circle"></i>';
-            break;
-        case 'error':
-            icon.innerHTML = '<i class="fa fa-times-circle"></i>';
-            break;
-        case 'info':
-            icon.innerHTML = '<i class="fa fa-info-circle"></i>';
-            break;
-        case 'warning':
-            icon.innerHTML = '<i class="fa fa-exclamation-circle"></i>';
-            break;
-    }
-    
-    // Afficher la notification avec animation
-    notification.classList.add('show');
 
-    // Masquer la notification après 5 secondes
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 5000);
+function showNotification(message, type) {
+            const notification = document.getElementById("notification");
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = "block";
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 2000);
 }
-
-// Fonction pour fermer la notification manuellement
-document.getElementById('closeNotification').addEventListener('click', () => {
-    const notification = document.getElementById('notification');
-    notification.classList.remove('show');
-});
-
 
 
 
@@ -272,9 +226,8 @@ const setPlayerTurn = (playerTurnIndex) => {
         let currentTeamTurn = playerTurns[playerTurnIndex];
         let boardDetailObject = boardDetails.filter(obj => obj.boardColor === currentTeamTurn);
         boardDetailObject[0].board.classList.toggle('active');
-        rollDiceButton.disabled = true;
-        showNotification(`🎲 Tour du joueur au bord ${currentTeamTurn}!  `, "info");
         loadQuestion();
+        showNotification(`🎲 Tour du joueur au bord ${currentTeamTurn}!  `, "info");
 }
 
 setPlayerTurn(0);
@@ -292,8 +245,6 @@ const nextTeamTurn = async () => {
     setPlayerTurn(prevPlayerTurnIndex);
     setPlayerTurn(currentPlayerTurnIndex);
     await delay(500);
-    currentIndex = (currentIndex + 1) % questions.length;
-    loadQuestion()
 
     // let currentTeam = boardDetails.find(team => team.boardColor === playerTurns[currentPlayerTurnIndex]);
 
@@ -327,7 +278,7 @@ function teamAnswer(selectedOption, teamColor) {
             rollDiceButton.disabled = false;
             setTimeout(() => {
                 showNotification(" Lancer le dé !", "success");
-            }, 1000);
+            }, 1000); 
         }else {
             localStorage.setItem(`${team.boardColor}Answer`, false);
             showNotification("❌ Mauvaise réponse!", "error");
@@ -347,20 +298,15 @@ function botAnswer(teamColor) {
 }
 
 
-//Détermine la liste des cases par lesquelles une pièce va passer en fonction du résultat des dés.
+
 const giveArrayForMovingPath = (piece) => {
     let indexOfPath;
     let movingArray = [];
-    let totalMoves;
-
-    totalMoves = diceResult + parseInt(localStorage.getItem('dangerBonus'),10);
-
     if (!pathArray.includes(piece.position)) {
         indexOfPath = homePathEntries[piece.team].findIndex(elem => elem === piece.position);
         let homePathArrayForPiece = homePathEntries[piece.team];
-        
 
-        for (let i = 0; i < totalMoves; i++) {
+        for (let i = 0; i < diceResult; i++) {
             if (indexOfPath + 1 < homePathArrayForPiece.length) {
                 indexOfPath += 1;
                 movingArray.push(homePathArrayForPiece[indexOfPath]);
@@ -370,7 +316,8 @@ const giveArrayForMovingPath = (piece) => {
         }
     } else {
         indexOfPath = pathArray.findIndex(elem => elem === piece.position);
-        for (let i = 0; i < totalMoves; i++) {
+
+        for (let i = 0; i < diceResult; i++) {
             indexOfPath = (indexOfPath + 1) % pathArray.length;
             movingArray.push(pathArray[indexOfPath]);
         }
@@ -380,9 +327,6 @@ const giveArrayForMovingPath = (piece) => {
 }
 
 
-
-
-// Anime le déplacement d'une pièce en la faisant avancer case par case selon le tableau de positions généré.
 const moveElementSequentially = (elementId, array) => {
     const elementToMove = document.querySelector(`[piece_id="${elementId}"]`);
     let currentTeamTurn = playerTurns[currentPlayerTurnIndex];
@@ -432,7 +376,7 @@ const moveElementSequentially = (elementId, array) => {
     !toBreak && moveToNextTarget(0);
 }
 
-// permet de lancer le dé
+
 const rollMyDice = async (hasBonus) => {
     currentPlayerTurnStatus = true;
     await delay(700);
@@ -444,9 +388,7 @@ const rollMyDice = async (hasBonus) => {
     }
 }
 
-// Permet de déplacer un pion
 const moveMyPiece = async (piece) => {
-    console.log('je suis ici');
     let array = giveArrayForMovingPath(piece);
 
     if (array.length < diceResult) {
@@ -679,303 +621,6 @@ const turnForBot = async () => {
     }
 }
 
-
-// const showDangerBonusCard = (bonus, piece) => {
-//     let dangerDisplay = document.getElementById('dangerNumberDisplay'); 
-//     if(piece === 'r9'){
-//         switch (bonus){
-//             case 6 :
-//                 // afficher image correspondante
-//             case 5 :
-//                 // afficher image corespondante
-//             default :
-//                 ''
-//         }
-//     }
-//     dangerDisplay.innerText = `+${bonus}`;
-//     dangerDisplay.style.display = 'block';
-    
-//     // setTimeout(() => {
-//     //     dangerDisplay.style.display = 'none'; 
-//     // }, 2000);
-// };
-
-
-
-function createCard(value) {
-
-    const symbols = { 1: "A", 11: "J", 12: "Q", 13: "K" };
-    const cardValue = symbols[value] || value;
-    const clubSymbol = "♣";
-
-    // Création de la carte
-    const card = document.createElement("div");
-    card.classList.add("symbolCard");
-
-    // Coin supérieur gauche
-    const topLeft = document.createElement("div");
-    topLeft.classList.add("corner", "top-left");
-    topLeft.innerHTML = `${cardValue} <br> ${clubSymbol}`;
-
-    // Symbole central
-    const center = document.createElement("div");
-    center.classList.add("center");
-    center.innerHTML = clubSymbol;
-
-    // Coin inférieur droit
-    const bottomRight = document.createElement("div");
-    bottomRight.classList.add("corner", "bottom-right");
-    bottomRight.innerHTML = `${cardValue} <br> ${clubSymbol}`;
-
-    // Ajout des éléments à la carte
-    card.appendChild(topLeft);
-    card.appendChild(center);
-    card.appendChild(bottomRight);
-
-    // Ajout de la carte dans le conteneur
-    const container = document.getElementById("card-container");
-    container.innerHTML = ""; // Supprime les cartes précédentes
-    container.appendChild(card);
-}
-
-
-function createCardHeart(value) {
-
-    const symbols = { 1: "A", 11: "J", 12: "Q", 13: "K" };
-    const cardValue = symbols[value] || value;
-    const clubSymbol = "♥";
-
-    // Création de la carte
-    const card = document.createElement("div");
-    card.classList.add("symbolCard");
-
-    // Coin supérieur gauche
-    const topLeft = document.createElement("div");
-    topLeft.classList.add("corner", "top-left");
-    topLeft.innerHTML = `${cardValue} <br> ${clubSymbol}`;
-
-    // Symbole central
-    const center = document.createElement("div");
-    center.classList.add("center");
-    center.innerHTML = clubSymbol;
-
-    // Coin inférieur droit
-    const bottomRight = document.createElement("div");
-    bottomRight.classList.add("corner", "bottom-right");
-    bottomRight.innerHTML = `${cardValue} <br> ${clubSymbol}`;
-
-    // Ajout des éléments à la carte
-    card.appendChild(topLeft);
-    card.appendChild(center);
-    card.appendChild(bottomRight);
-
-    // Ajout de la carte dans le conteneur
-    const container = document.getElementById("card-container");
-    container.innerHTML = ""; // Supprime les cartes précédentes
-    container.appendChild(card);
-}
-
-
-function createCardSquare(value) {
-
-    const symbols = { 1: "A", 11: "J", 12: "Q", 13: "K" };
-    const cardValue = symbols[value] || value;
-    const clubSymbol = "♦";
-
-    // Création de la carte
-    const card = document.createElement("div");
-    card.classList.add("symbolCard");
-
-    // Coin supérieur gauche
-    const topLeft = document.createElement("div");
-    topLeft.classList.add("corner", "top-left");
-    topLeft.innerHTML = `${cardValue} <br> ${clubSymbol}`;
-
-    // Symbole central
-    const center = document.createElement("div");
-    center.classList.add("center");
-    center.innerHTML = clubSymbol;
-
-    // Coin inférieur droit
-    const bottomRight = document.createElement("div");
-    bottomRight.classList.add("corner", "bottom-right");
-    bottomRight.innerHTML = `${cardValue} <br> ${clubSymbol}`;
-
-    // Ajout des éléments à la carte
-    card.appendChild(topLeft);
-    card.appendChild(center);
-    card.appendChild(bottomRight);
-
-    // Ajout de la carte dans le conteneur
-    const container = document.getElementById("card-container");
-    container.innerHTML = ""; // Supprime les cartes précédentes
-    container.appendChild(card);
-}
-
-function createCardDead(value) {
-
-    const symbols = { 1: "A", 11: "J", 12: "Q", 13: "K" };
-    const cardValue = symbols[value] || value;
-    const clubSymbol = "☠";
-
-    // Création de la carte
-    const card = document.createElement("div");
-    card.classList.add("symbolCard");
-
-    // Coin supérieur gauche
-    const topLeft = document.createElement("div");
-    topLeft.classList.add("corner", "top-left");
-    topLeft.innerHTML = `${cardValue} <br> ${clubSymbol}`;
-
-    // Symbole central
-    const center = document.createElement("div");
-    center.classList.add("center");
-    center.innerHTML = clubSymbol;
-
-    // Coin inférieur droit
-    const bottomRight = document.createElement("div");
-    bottomRight.classList.add("corner", "bottom-right");
-    bottomRight.innerHTML = `${cardValue} <br> ${clubSymbol}`;
-
-    // Ajout des éléments à la carte
-    card.appendChild(topLeft);
-    card.appendChild(center);
-    card.appendChild(bottomRight);
-
-    // Ajout de la carte dans le conteneur
-    const container = document.getElementById("card-container");
-    container.innerHTML = ""; // Supprime les cartes précédentes
-    container.appendChild(card);
-}
-
-const showDangerBonusCard = (bonus, piece) => {
-    
-    if (piece === 'r9') {
-        switch (bonus) {
-            case 10:
-                createCard(10);
-                break;
-            case 9:
-                createCard(9);
-                break;
-            case 8:
-                createCard(8);
-                break;
-            case 7:
-                createCard(7);
-                break;
-            case 6:
-                createCard(6);
-                break;
-            case 5:
-                createCard(5);
-                break;
-            default:
-                " "
-        }
-
-        // Met à jour l'image seulement si un chemin est défini
-        if (imageSrc) {
-            dangerImage.src = imageSrc;
-            dangerImage.style.display = 'block'; // Afficher l'image
-        }
-    }
-
-    if (piece === 'y9') {
-        switch (bonus) {
-            case 10:
-                createCardHeart(10);
-                break;
-            case 9:
-                createCardHeart(9);
-                break;
-            case 8:
-                createCardHeart(8);
-                break;
-            case 7:
-                createCardHeart(7);
-                break;
-            case 6:
-                createCardHeart(6);
-                break;
-            case 5:
-                createCardHeart(5);
-                break;
-            default:
-                " "
-        }
-
-        // Met à jour l'image seulement si un chemin est défini
-        if (imageSrc) {
-            dangerImage.src = imageSrc;
-            dangerImage.style.display = 'block'; // Afficher l'image
-        }
-    }
-
-    if (piece === 'g9') {
-        switch (bonus) {
-            case 10:
-                createCardDead(10);
-                break;
-            case 9:
-                createCardDead(9);
-                break;
-            case 8:
-                createCardDead(8);
-                break;
-            case 7:
-                createCardDead(7);
-                break;
-            case 6:
-                createCardDead(6);
-                break;
-            case 5:
-                createCardDead(5);
-                break;
-            default:
-                " "
-        }
-
-        // Met à jour l'image seulement si un chemin est défini
-        if (imageSrc) {
-            dangerImage.src = imageSrc;
-            dangerImage.style.display = 'block'; // Afficher l'image
-        }
-    }
-
-    if (piece === 'b9') {
-        switch (bonus) {
-            case 10:
-                createCardSquare(10);
-                break;
-            case 9:
-                createCardSquare(9);
-                break;
-            case 8:
-                createCardSquare(8);
-                break;
-            case 7:
-                createCardSquare(7);
-                break;
-            case 6:
-                createCardSquare(6);
-                break;
-            case 5:
-                createCardSquare(5);
-                break;
-            default:
-                " "
-        }
-
-        // Met à jour l'image seulement si un chemin est défini
-        if (imageSrc) {
-            dangerImage.src = imageSrc;
-            dangerImage.style.display = 'block'; // Afficher l'image
-        }
-    }
-};
-
-
 // Avancement des pions de maniere simple
 const turnForUser = async (e) => {
     let isUserTurn = playerTurns[currentPlayerTurnIndex];
@@ -990,16 +635,10 @@ const turnForUser = async (e) => {
     let totalUnlockedPieces = playerPieces.filter(obj => obj.team === currentTeamTurn && obj.status === 1).length;
 
     let piece = playerPieces.find((obj => obj.id === e.target.getAttribute('piece_id') && obj.team === currentTeamTurn));
-    console.log(piece)
-    localStorage.setItem('dangerBonus', 0)
-    if (dangerPaths.includes(piece.position)) {
-        localStorage.setItem('dangerBonus', Math.floor(Math.random() * 5) + 6)
-        showDangerBonusCard(localStorage.getItem('dangerBonus'), piece); 
-    }
     let opponentPieces = playerPieces.filter(obj => obj.team !== currentTeamTurn && obj.status === 1);
     let array = giveArrayForMovingPath(piece);
+
     let cut = opponentPieces.find(obj => obj.position === array[array.length - 1] && !safePaths.includes(obj.position));
-    
 
 
     if (cut) {
@@ -1010,7 +649,7 @@ const turnForUser = async (e) => {
         return
     }
 
-    if (array.length < diceResult ) {
+    if (array.length < diceResult) {
         await delay(500);
         currentPlayerTurnStatus = true;
         nextTeamTurn();
