@@ -294,6 +294,11 @@ body{
     animation: animateBoard .8s linear infinite;
 }
 
+.pion {
+    width: 40px;
+    height: auto;
+}
+
 @keyframes animateBoard {
     0% {
         filter:brightness(1.4);

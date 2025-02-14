@@ -23,6 +23,8 @@ let currentPlayerTurnStatus = true;
 let dangerBonus= localStorage.getItem('localStorage');
 let teamHasBonus = false; 
 let hasAnswer = false;
+let totalMoves;
+
 const questions = [
     {
         question: "Quel est le langage principal utilisé pour le développement web frontend ?",
@@ -39,7 +41,7 @@ const questions = [
         options: ["Laravel", "Django", "Next.js", "Spring Boot"],
         answer: "Next.js",
     },
-    ];
+];
 
 let diceResult;
 
@@ -90,6 +92,8 @@ class Player_Piece {
         let toAppendDiv = document.getElementById(this.gameEntry);
         movePieceAudio.play();
         toAppendDiv.appendChild(element);
+        console.log(`Pion ${this.id} débloqué. Nouvelle position : ${this.position}, Status : ${this.status}`);
+
     }
 
     updatePosition(position) {
@@ -97,7 +101,10 @@ class Player_Piece {
     }
 
     movePiece(array) {
+        console.log(array)
         let filteredArray = array;
+
+        console.log(`Le pion ${this.id} tente de se déplacer sur :`, filteredArray);
 
         if (array.includes(this.homePathEntry)) {
             let indexOfHomePathEntry = array.findIndex(obj => obj === this.homePathEntry);
@@ -148,8 +155,9 @@ for (let i = 0; i < numPvP; i++) {
     for (let i = 0; i < 4; i++) {
 
         const span = document.createElement('span');
-        const icon = document.createElement('i');
-        icon.classList.add('fa-solid', 'fa-location-pin', 'piece', `${boardColor}-piece`);
+        const icon = document.createElement('img');
+        icon.src = boardColor === 'blue' ? 'Assets/imageblue.png' : 'Assets/imagegreen.png';
+        icon.classList.add('fa-solid', 'fa-location-pin', 'piece', 'pion', `${boardColor}-piece`);
 
         icon.addEventListener('click', (e) => {
             turnForUser(e)
@@ -185,16 +193,6 @@ document.getElementById('homePage').remove();
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 
-
-// function showNotification(message, type) {
-//             const notification = document.getElementById("notification");
-//             notification.textContent = message;
-//             notification.className = `notification ${type}`;
-//             notification.style.display = "block";
-//             setTimeout(() => {
-//                 notification.style.display = "none";
-//             }, 2000);
-// }
 
 
 // Fonction pour afficher la notification
@@ -310,7 +308,6 @@ const nextTeamTurn = async () => {
     //         console.log("j'ai lancé")
     //     } 
     // } 
-     
 };
 
 
@@ -339,28 +336,19 @@ function teamAnswer(selectedOption, teamColor) {
 
 
 
-// Gère la réponse pour la Bot
-function botAnswer(teamColor) {
-    const currentQuestion = questions[currentIndex];
-    const randomOption = currentQuestion.options[Math.floor(Math.random() * currentQuestion.options.length)];
-    teamAnswer(randomOption, teamColor);
-}
-
-
 //Détermine la liste des cases par lesquelles une pièce va passer en fonction du résultat des dés.
 const giveArrayForMovingPath = (piece) => {
     let indexOfPath;
     let movingArray = [];
-    let totalMoves;
 
-    totalMoves = diceResult + parseInt(localStorage.getItem('dangerBonus'),10);
+    // totalMoves = diceResult + parseInt(localStorage.getItem('dangerBonus'),10);
 
     if (!pathArray.includes(piece.position)) {
         indexOfPath = homePathEntries[piece.team].findIndex(elem => elem === piece.position);
         let homePathArrayForPiece = homePathEntries[piece.team];
         
 
-        for (let i = 0; i < totalMoves; i++) {
+        for (let i = 0; i < diceResult; i++) {
             if (indexOfPath + 1 < homePathArrayForPiece.length) {
                 indexOfPath += 1;
                 movingArray.push(homePathArrayForPiece[indexOfPath]);
@@ -370,7 +358,7 @@ const giveArrayForMovingPath = (piece) => {
         }
     } else {
         indexOfPath = pathArray.findIndex(elem => elem === piece.position);
-        for (let i = 0; i < totalMoves; i++) {
+        for (let i = 0; i < diceResult; i++) {
             indexOfPath = (indexOfPath + 1) % pathArray.length;
             movingArray.push(pathArray[indexOfPath]);
         }
@@ -382,13 +370,14 @@ const giveArrayForMovingPath = (piece) => {
 
 
 
+
 // Anime le déplacement d'une pièce en la faisant avancer case par case selon le tableau de positions généré.
 const moveElementSequentially = (elementId, array) => {
     const elementToMove = document.querySelector(`[piece_id="${elementId}"]`);
     let currentTeamTurn = playerTurns[currentPlayerTurnIndex];
     let piece = playerPieces.find(obj => obj.id === elementId);
     let toBreak = false;
-
+    console.log(`Déplacement du pion ${elementId} sur :`, array);
     //Function to move the element to the next target
     function moveToNextTarget(index) {
         if (index >= array.length) return;
@@ -411,11 +400,6 @@ const moveElementSequentially = (elementId, array) => {
                 declareWinner(currentTeamTurn);
                 return;
             }
-            if (currentTeamTurn === 'blue') {
-                currentPlayerTurnStatus = true;
-            } else {
-                rollMyDice(true);
-            }
             return;
         }
 
@@ -432,35 +416,41 @@ const moveElementSequentially = (elementId, array) => {
     !toBreak && moveToNextTarget(0);
 }
 
+
+
+
 // permet de lancer le dé
-const rollMyDice = async (hasBonus) => {
-    currentPlayerTurnStatus = true;
-    await delay(700);
-    if (diceResult === 6 || hasBonus || teamHasBonus) {
-        rollDiceButtonForBot();
-    } else {
-        nextTeamTurn();
-        if (playerTurns[currentPlayerTurnIndex] !== 'blue') rollDiceButtonForBot();
-    }
-}
+// const rollMyDice = async (hasBonus) => {
+//     currentPlayerTurnStatus = true;
+//     await delay(700);
+//     if (diceResult === 6 || hasBonus || teamHasBonus) {
+//         rollDiceButtonForBot();
+//     } else {
+//         nextTeamTurn();
+//         if (playerTurns[currentPlayerTurnIndex] !== 'blue') rollDiceButtonForBot();
+//     }
+// }
+
+
 
 // Permet de déplacer un pion
-const moveMyPiece = async (piece) => {
-    console.log('je suis ici');
-    let array = giveArrayForMovingPath(piece);
+// const moveMyPiece = async (piece) => {
+    
+//     let array = giveArrayForMovingPath(piece);
+//     console.log(array);
+    
+//     if (array.length < diceResult) {
+//         await delay(500);
+//         currentPlayerTurnStatus = true;
+//         nextTeamTurn();
+//         return false;
+//     }
 
-    if (array.length < diceResult) {
-        await delay(500);
-        currentPlayerTurnStatus = true;
-        nextTeamTurn();
-        return false;
-    }
-
-    piece.movePiece(array);
-    await delay(array.length * 185);
-    rollMyDice();
-    return true; //Return true if move was performed;
-}
+//     piece.movePiece(array);
+//     await delay(array.length * 185);
+//     rollMyDice();
+//     return true; //Return true if move was performed;
+// }
 
 const giveEnemiesBehindMe = (piece) => {
     let currentTeamTurn = playerTurns[currentPlayerTurnIndex];
@@ -481,224 +471,203 @@ const giveEnemiesBehindMe = (piece) => {
 }
 
 // Avancement des pions de maniere automatique
-const turnForBot = async () => {
-    let currentTeamTurn = playerTurns[currentPlayerTurnIndex];
-    let totalUnlockedPieces = playerPieces.filter(obj => obj.team === currentTeamTurn && obj.status === 1);
-    let totalPiecesOfThisTeam = playerPieces.filter(obj => obj.team === currentTeamTurn).length;
-    let isMoving = false;
+// const turnForBot = async () => {
+//     let currentTeamTurn = playerTurns[currentPlayerTurnIndex];
+//     let totalUnlockedPieces = playerPieces.filter(obj => obj.team === currentTeamTurn && obj.status === 1);
+//     let totalPiecesOfThisTeam = playerPieces.filter(obj => obj.team === currentTeamTurn).length;
+//     let isMoving = false;
 
-    if (totalUnlockedPieces.length === 0 && diceResult !== 6) {
-        rollMyDice();
-        return
-    }
+//     if (totalUnlockedPieces.length === 0 && diceResult !== 6) {
+//         rollMyDice();
+//         return
+//     }
 
-    currentPlayerTurnStatus = true;
-    let piece_team = playerPieces.filter(obj => obj.team === currentTeamTurn);
+//     currentPlayerTurnStatus = true;
+//     let piece_team = playerPieces.filter(obj => obj.team === currentTeamTurn);
 
-    //Condition when the bot has 0 pieces unlocked!
-    if (totalUnlockedPieces.length === 0 && diceResult === 6) {
-        piece_team[0].unlockPiece();
-        rollMyDice();
-        return
-    }
+//     //Condition when the bot has 0 pieces unlocked!
+//     if (totalUnlockedPieces.length === 0 && diceResult === 6) {
+//         piece_team[0].unlockPiece();
+//         rollMyDice();
+//         return
+//     }
 
-    //logic for kill detection
-    let opponentPieces = playerPieces.filter(obj => obj.team !== currentTeamTurn && obj.status === 1);
-    let bonusReached = false;
+//     //logic for kill detection
+//     let opponentPieces = playerPieces.filter(obj => obj.team !== currentTeamTurn && obj.status === 1);
+//     let bonusReached = false;
 
-    for (let i = 0; i < totalUnlockedPieces.length; i++) {
-        if (bonusReached) {
-            break;
-        }
+//     for (let i = 0; i < totalUnlockedPieces.length; i++) {
+//         if (bonusReached) {
+//             break;
+//         }
 
-        let array = giveArrayForMovingPath(totalUnlockedPieces[i]);
-        let cut = opponentPieces.find(obj => obj.position === array[array.length - 1] && !safePaths.includes(obj.position));
-        let homeBonusReached = array[array.length - 1] === 'home'; //If the last path is home
-        if (cut) {
-            totalUnlockedPieces[i].movePiece(array);
-            await delay(array.length * 185);
-            cut.sentMeToBoard();
-            bonusReached = true;
-            rollMyDice(true);
-            return
-        }
-        if (homeBonusReached) {
-            totalUnlockedPieces[i].movePiece(array);
-            await delay(array.length * 185);
-            bonusReached = true;
-            rollMyDice(true);
-        }
-    }
-
-    if (bonusReached) {
-        return;
-    }
-
-
-    let lockedPieces = playerPieces.filter(obj => obj.team === currentTeamTurn && obj.status === 0);
-
-    const attemptMove = async (piece) => {
-        if (!await moveMyPiece(piece)) {
-            return false;
-        }
-        isMoving = true;
-        return true;
-    }
-
-    //Condition when the bot has 1 unlocked piece
-    if (totalUnlockedPieces.length === 1) {
-        if (totalUnlockedPieces.length <= 3 && diceResult === 6) {
-            lockedPieces[0].unlockPiece();
-            rollMyDice();
-            return
-        }
-        let piece = totalUnlockedPieces.find(obj => obj.status === 1);
-        if (!await attemptMove(piece));
-    }
-
-
-    //Condition when the bot has 2 pieces unlocked
-    if (totalUnlockedPieces.length === 2) {
-        if (totalUnlockedPieces.length <= 3 && diceResult === 6 && totalPiecesOfThisTeam >= 3) {
-            lockedPieces[0].unlockPiece();
-            rollDiceButtonForBot();
-            return;
-        }
-
-        let pieceSafe = totalUnlockedPieces.filter(obj => safePaths.includes(obj.position));
-        let pieceUnSafe = totalUnlockedPieces.filter(obj => !safePaths.includes(obj.position));
-
-        if (pieceSafe.length === 0) {
-            let scoreOfFirstPiece = pieceUnSafe[0].score;
-            let scoreOfSecondPiece = pieceUnSafe[1].score;
-
-            if (scoreOfSecondPiece > scoreOfFirstPiece) {
-                if (!await attemptMove(pieceUnSafe[1])) return; // Move the element with higher score
-            } else {
-                if (!await attemptMove(pieceUnSafe[0])) return; // Move the element with higher score
-            }
-        }
-
-        if (pieceSafe.length === 1) {
-            if (!await attemptMove(pieceUnSafe[0])) return;
-        }
-
-        if (pieceSafe.length === 2 && pieceSafe[0].position === pieceSafe[1].position) {
-            if (!await attemptMove(pieceSafe[0])) return;
-        }
-
-        if (pieceSafe.length === 2) {
-            let scoreOfFirstPiece = pieceSafe[0].score;
-            let opponentsBeforeFirstPiece = giveEnemiesBehindMe(pieceSafe[0]);
-
-            let scoreOfSecondPiece = pieceSafe[1].score;
-            let opponentsBeforeSecondPiece = giveEnemiesBehindMe(pieceSafe[1]);
-
-            if (opponentsBeforeFirstPiece > opponentsBeforeSecondPiece) {
-                if (!await attemptMove(pieceSafe[1])) return;
-            } else if (opponentsBeforeSecondPiece > opponentsBeforeFirstPiece) {
-                if (!await attemptMove(pieceSafe[0])) return;
-            } else if (opponentsBeforeFirstPiece === opponentsBeforeSecondPiece) {
-                if (scoreOfSecondPiece > scoreOfFirstPiece) {
-                    if (!await attemptMove(pieceSafe[1])) return;
-                } else {
-                    if (!await attemptMove(pieceSafe[0])) return;
-                }
-            }
-        }
-    }
-
-    //Condition when the bot has 3 pieces unlocked
-    if (totalUnlockedPieces.length === 3) {
-        let pieceSafe = totalUnlockedPieces.filter(obj => safePaths.includes(obj.position));
-        let pieceUnSafe = totalUnlockedPieces.filter(obj => !safePaths.includes(obj.position));
-
-        if (pieceSafe.length === 0) {
-            let scoreOfFirstPiece = pieceUnSafe[0].score;
-            let scoreOfSecondPiece = pieceUnSafe[1].score;
-            let scoreOfThirdPiece = pieceUnSafe[2].score;
-
-            let greatestScore = Math.max(scoreOfFirstPiece, scoreOfSecondPiece, scoreOfThirdPiece);
-            let movingPiece = pieceUnSafe.find(obj => obj.score === greatestScore);
-            if (!await attemptMove(movingPiece)) return;
-        }
-
-        if (pieceSafe.length === 1) { //1 piece is safe and other 2 are unsafe
-            let scoreOfFirstPiece = pieceUnSafe[0].score;
-            let scoreOfSecondPiece = pieceUnSafe[1].score;
-
-            if (scoreOfSecondPiece > scoreOfFirstPiece) {
-                if (!await attemptMove(pieceUnSafe[1])) return; // Move the element with higher score
-            } else {
-                if (!await attemptMove(pieceUnSafe[0])) return; // Move the element with higher score
-            }
-        }
-
-        if (pieceSafe.length === 3 && pieceSafe[0].position === pieceSafe[1].position === pieceSafe[2].position) {
-            if (!await attemptMove(pieceSafe[0])) return;
-        }
-
-        if (pieceSafe.length === 2) {
-            if (!await attemptMove(pieceUnSafe[0])) return;
-        }
-
-        if (pieceSafe.length === 3) {
-            let opponentsBeforeFirstPiece = giveEnemiesBehindMe(pieceSafe[0]);
-            let opponentsBeforeSecondPiece = giveEnemiesBehindMe(pieceSafe[1]);
-            let opponentsBeforeThirdPiece = giveEnemiesBehindMe(pieceSafe[2]);
-
-            if (opponentsBeforeFirstPiece < opponentsBeforeSecondPiece && opponentsBeforeFirstPiece < opponentsBeforeThirdPiece) {
-                if (!await attemptMove(pieceSafe[0])) return;
-            } else if (opponentsBeforeSecondPiece < opponentsBeforeFirstPiece && opponentsBeforeSecondPiece < opponentsBeforeThirdPiece) {
-                if (!await attemptMove(pieceSafe[1])) return;
-            } else if (opponentsBeforeThirdPiece < opponentsBeforeFirstPiece && opponentsBeforeThirdPiece < opponentsBeforeSecondPiece) {
-                if (!await attemptMove(pieceSafe[2])) return;
-            } else {
-                let piecesAtHomePath = piece_team.filter((obj) => obj.status === 1 && homePathArray.includes(obj.position));
-                let piecesNotAtHomePath = piece_team.filter((obj) => obj.status === 1 && !homePathArray.includes(obj.position));
-
-                piecesNotAtHomePath.sort((a, b) => a.score - b.score);
-
-                if (piecesNotAtHomePath.length > 0) {
-                    if (!await attemptMove(piecesNotAtHomePath[0])) return;
-                } else {
-                    for (let i = 0; i < piecesAtHomePath; i++) {
-                        let movingPathArray = giveArrayForMovingPath(piecesAtHomePath[i]);
-                        if (movingPathArray.length === diceResult) {
-                            isMoving = true;
-                            moveMyPiece(piecesAtHomePath[i]);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if (!isMoving) {
-        nextTeamTurn();
-    }
-}
-
-
-// const showDangerBonusCard = (bonus, piece) => {
-//     let dangerDisplay = document.getElementById('dangerNumberDisplay'); 
-//     if(piece === 'r9'){
-//         switch (bonus){
-//             case 6 :
-//                 // afficher image correspondante
-//             case 5 :
-//                 // afficher image corespondante
-//             default :
-//                 ''
+//         let array = giveArrayForMovingPath(totalUnlockedPieces[i]);
+//         let cut = opponentPieces.find(obj => obj.position === array[array.length - 1] && !safePaths.includes(obj.position));
+//         let homeBonusReached = array[array.length - 1] === 'home'; //If the last path is home
+//         if (cut) {
+//             totalUnlockedPieces[i].movePiece(array);
+//             await delay(array.length * 185);
+//             cut.sentMeToBoard();
+//             bonusReached = true;
+//             rollMyDice(true);
+//             return
+//         }
+//         if (homeBonusReached) {
+//             totalUnlockedPieces[i].movePiece(array);
+//             await delay(array.length * 185);
+//             bonusReached = true;
+//             rollMyDice(true);
 //         }
 //     }
-//     dangerDisplay.innerText = `+${bonus}`;
-//     dangerDisplay.style.display = 'block';
-    
-//     // setTimeout(() => {
-//     //     dangerDisplay.style.display = 'none'; 
-//     // }, 2000);
-// };
+
+//     if (bonusReached) {
+//         return;
+//     }
+
+
+//     let lockedPieces = playerPieces.filter(obj => obj.team === currentTeamTurn && obj.status === 0);
+
+//     const attemptMove = async (piece) => {
+//         if (!await moveMyPiece(piece)) {
+//             return false;
+//         }
+//         isMoving = true;
+//         return true;
+//     }
+
+//     //Condition when the bot has 1 unlocked piece
+//     if (totalUnlockedPieces.length === 1) {
+//         if (totalUnlockedPieces.length <= 3 && diceResult === 6) {
+//             lockedPieces[0].unlockPiece();
+//             rollMyDice();
+//             return
+//         }
+//         let piece = totalUnlockedPieces.find(obj => obj.status === 1);
+//         if (!await attemptMove(piece));
+//     }
+
+
+//     //Condition when the bot has 2 pieces unlocked
+//     if (totalUnlockedPieces.length === 2) {
+//         if (totalUnlockedPieces.length <= 3 && diceResult === 6 && totalPiecesOfThisTeam >= 3) {
+//             lockedPieces[0].unlockPiece();
+//             rollDiceButtonForBot();
+//             return;
+//         }
+
+//         let pieceSafe = totalUnlockedPieces.filter(obj => safePaths.includes(obj.position));
+//         let pieceUnSafe = totalUnlockedPieces.filter(obj => !safePaths.includes(obj.position));
+
+//         if (pieceSafe.length === 0) {
+//             let scoreOfFirstPiece = pieceUnSafe[0].score;
+//             let scoreOfSecondPiece = pieceUnSafe[1].score;
+
+//             if (scoreOfSecondPiece > scoreOfFirstPiece) {
+//                 if (!await attemptMove(pieceUnSafe[1])) return; // Move the element with higher score
+//             } else {
+//                 if (!await attemptMove(pieceUnSafe[0])) return; // Move the element with higher score
+//             }
+//         }
+
+//         if (pieceSafe.length === 1) {
+//             if (!await attemptMove(pieceUnSafe[0])) return;
+//         }
+
+//         if (pieceSafe.length === 2 && pieceSafe[0].position === pieceSafe[1].position) {
+//             if (!await attemptMove(pieceSafe[0])) return;
+//         }
+
+//         if (pieceSafe.length === 2) {
+//             let scoreOfFirstPiece = pieceSafe[0].score;
+//             let opponentsBeforeFirstPiece = giveEnemiesBehindMe(pieceSafe[0]);
+
+//             let scoreOfSecondPiece = pieceSafe[1].score;
+//             let opponentsBeforeSecondPiece = giveEnemiesBehindMe(pieceSafe[1]);
+
+//             if (opponentsBeforeFirstPiece > opponentsBeforeSecondPiece) {
+//                 if (!await attemptMove(pieceSafe[1])) return;
+//             } else if (opponentsBeforeSecondPiece > opponentsBeforeFirstPiece) {
+//                 if (!await attemptMove(pieceSafe[0])) return;
+//             } else if (opponentsBeforeFirstPiece === opponentsBeforeSecondPiece) {
+//                 if (scoreOfSecondPiece > scoreOfFirstPiece) {
+//                     if (!await attemptMove(pieceSafe[1])) return;
+//                 } else {
+//                     if (!await attemptMove(pieceSafe[0])) return;
+//                 }
+//             }
+//         }
+//     }
+
+//     //Condition when the bot has 3 pieces unlocked
+//     if (totalUnlockedPieces.length === 3) {
+//         let pieceSafe = totalUnlockedPieces.filter(obj => safePaths.includes(obj.position));
+//         let pieceUnSafe = totalUnlockedPieces.filter(obj => !safePaths.includes(obj.position));
+
+//         if (pieceSafe.length === 0) {
+//             let scoreOfFirstPiece = pieceUnSafe[0].score;
+//             let scoreOfSecondPiece = pieceUnSafe[1].score;
+//             let scoreOfThirdPiece = pieceUnSafe[2].score;
+
+//             let greatestScore = Math.max(scoreOfFirstPiece, scoreOfSecondPiece, scoreOfThirdPiece);
+//             let movingPiece = pieceUnSafe.find(obj => obj.score === greatestScore);
+//             if (!await attemptMove(movingPiece)) return;
+//         }
+
+//         if (pieceSafe.length === 1) { //1 piece is safe and other 2 are unsafe
+//             let scoreOfFirstPiece = pieceUnSafe[0].score;
+//             let scoreOfSecondPiece = pieceUnSafe[1].score;
+
+//             if (scoreOfSecondPiece > scoreOfFirstPiece) {
+//                 if (!await attemptMove(pieceUnSafe[1])) return; // Move the element with higher score
+//             } else {
+//                 if (!await attemptMove(pieceUnSafe[0])) return; // Move the element with higher score
+//             }
+//         }
+
+//         if (pieceSafe.length === 3 && pieceSafe[0].position === pieceSafe[1].position === pieceSafe[2].position) {
+//             if (!await attemptMove(pieceSafe[0])) return;
+//         }
+
+//         if (pieceSafe.length === 2) {
+//             if (!await attemptMove(pieceUnSafe[0])) return;
+//         }
+
+//         if (pieceSafe.length === 3) {
+//             let opponentsBeforeFirstPiece = giveEnemiesBehindMe(pieceSafe[0]);
+//             let opponentsBeforeSecondPiece = giveEnemiesBehindMe(pieceSafe[1]);
+//             let opponentsBeforeThirdPiece = giveEnemiesBehindMe(pieceSafe[2]);
+
+//             if (opponentsBeforeFirstPiece < opponentsBeforeSecondPiece && opponentsBeforeFirstPiece < opponentsBeforeThirdPiece) {
+//                 if (!await attemptMove(pieceSafe[0])) return;
+//             } else if (opponentsBeforeSecondPiece < opponentsBeforeFirstPiece && opponentsBeforeSecondPiece < opponentsBeforeThirdPiece) {
+//                 if (!await attemptMove(pieceSafe[1])) return;
+//             } else if (opponentsBeforeThirdPiece < opponentsBeforeFirstPiece && opponentsBeforeThirdPiece < opponentsBeforeSecondPiece) {
+//                 if (!await attemptMove(pieceSafe[2])) return;
+//             } else {
+//                 let piecesAtHomePath = piece_team.filter((obj) => obj.status === 1 && homePathArray.includes(obj.position));
+//                 let piecesNotAtHomePath = piece_team.filter((obj) => obj.status === 1 && !homePathArray.includes(obj.position));
+
+//                 piecesNotAtHomePath.sort((a, b) => a.score - b.score);
+
+//                 if (piecesNotAtHomePath.length > 0) {
+//                     if (!await attemptMove(piecesNotAtHomePath[0])) return;
+//                 } else {
+//                     for (let i = 0; i < piecesAtHomePath; i++) {
+//                         let movingPathArray = giveArrayForMovingPath(piecesAtHomePath[i]);
+//                         if (movingPathArray.length === diceResult) {
+//                             isMoving = true;
+//                             moveMyPiece(piecesAtHomePath[i]);
+//                             break;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     if (!isMoving) {
+//         nextTeamTurn();
+//     }
+// }
 
 
 
@@ -873,12 +842,6 @@ const showDangerBonusCard = (bonus, piece) => {
             default:
                 " "
         }
-
-        // Met à jour l'image seulement si un chemin est défini
-        if (imageSrc) {
-            dangerImage.src = imageSrc;
-            dangerImage.style.display = 'block'; // Afficher l'image
-        }
     }
 
     if (piece === 'y9') {
@@ -905,11 +868,7 @@ const showDangerBonusCard = (bonus, piece) => {
                 " "
         }
 
-        // Met à jour l'image seulement si un chemin est défini
-        if (imageSrc) {
-            dangerImage.src = imageSrc;
-            dangerImage.style.display = 'block'; // Afficher l'image
-        }
+
     }
 
     if (piece === 'g9') {
@@ -936,11 +895,6 @@ const showDangerBonusCard = (bonus, piece) => {
                 " "
         }
 
-        // Met à jour l'image seulement si un chemin est défini
-        if (imageSrc) {
-            dangerImage.src = imageSrc;
-            dangerImage.style.display = 'block'; // Afficher l'image
-        }
     }
 
     if (piece === 'b9') {
@@ -967,18 +921,16 @@ const showDangerBonusCard = (bonus, piece) => {
                 " "
         }
 
-        // Met à jour l'image seulement si un chemin est défini
-        if (imageSrc) {
-            dangerImage.src = imageSrc;
-            dangerImage.style.display = 'block'; // Afficher l'image
-        }
     }
 };
 
 
 // Avancement des pions de maniere simple
+
+
+
 const turnForUser = async (e) => {
-    let isUserTurn = playerTurns[currentPlayerTurnIndex];
+    let isUserTurn = playerTurns[currentPlayerTurnIndex] ;
     let currentTeamTurn = playerTurns[currentPlayerTurnIndex];
 
     //Return user if user has used it chance or the current turn is not for user
@@ -990,17 +942,25 @@ const turnForUser = async (e) => {
     let totalUnlockedPieces = playerPieces.filter(obj => obj.team === currentTeamTurn && obj.status === 1).length;
 
     let piece = playerPieces.find((obj => obj.id === e.target.getAttribute('piece_id') && obj.team === currentTeamTurn));
-    console.log(piece)
-    localStorage.setItem('dangerBonus', 0)
+    
+    console.log(piece);
+    localStorage.setItem('dangerBonus', 0);
+
     if (dangerPaths.includes(piece.position)) {
         localStorage.setItem('dangerBonus', Math.floor(Math.random() * 5) + 6)
-        showDangerBonusCard(localStorage.getItem('dangerBonus'), piece); 
+        // showDangerBonusCard(localStorage.getItem('dangerBonus'), piece.position); 
     }
     let opponentPieces = playerPieces.filter(obj => obj.team !== currentTeamTurn && obj.status === 1);
     let array = giveArrayForMovingPath(piece);
     let cut = opponentPieces.find(obj => obj.position === array[array.length - 1] && !safePaths.includes(obj.position));
     
-
+    console.log("Pion sélectionné :", piece);
+    console.log("Position actuelle :", piece?.position);
+    console.log("Statut (0=lock, 1=unlocked) :", piece?.status);
+    console.log("Équipe en cours :", currentTeamTurn);
+    console.log("Résultat du dé totalmoves :", totalMoves);
+    console.log( "table", array);
+    console.log( "Résultat du dé ", totalUnlockedPieces);
 
     if (cut) {
         piece.movePiece(array);
@@ -1034,7 +994,12 @@ const turnForUser = async (e) => {
             nextTeamTurn();
         }
     }
+
+
+
 }
+
+
 
 
 const rollDiceGif = new Image();
@@ -1113,8 +1078,15 @@ document.addEventListener('keydown', (e) => {
         piece?.click()
     }
 
-    if (e.code === 'Space') {
-        rollDiceButton.click();
+        console.log(`🔵 Touche pressée : ${e.key}`);
+
+    let piece = document.querySelector(`[myPieceNum="${e.key}"]`);
+    
+    if (piece) {
+        console.log(`✅ Pion trouvé : ${piece.getAttribute("piece_id")}, déclenchement du click()`);
+        piece.click();
+    } else {
+        console.log(`❌ Aucune pièce trouvée pour ${e.key}`);
     }
 })
 
@@ -1175,3 +1147,6 @@ function fire(particleRatio, opts) {
         particleCount: Math.floor(count * particleRatio)
     });
 }
+
+
+
