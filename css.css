@@ -1,0 +1,125 @@
+body {
+    background: #fff;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+* {
+    margin: 0;
+}
+
+
+.intro-content .logo1 {
+    width: 25vw; 
+    max-width: 300px; 
+    margin-bottom: 0px;
+    margin-top: 5vh; 
+    animation: floatingEffect 3s ease-in-out infinite;
+}
+
+/* Animation de flottement */
+@keyframes floatingEffect {
+    0% {
+        transform: translateY(0);  
+    }
+    50% {
+        transform: translateY(-10px);  
+    }
+    100% {
+        transform: translateY(0);  
+    }
+}
+
+/* Styles du "ring" */
+.ring {
+    position: relative;
+    width: 40vw; 
+    height: 40vw;  
+    max-width: 320px;
+    max-height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; 
+}
+
+
+.ring i {
+    position: absolute;
+    inset: 0;
+    border: 2px solid #572f02;
+    transition: 0.5s;
+}
+
+.ring i:nth-child(1) {
+    border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+    animation: animate 6s linear infinite;
+}
+
+.ring i:nth-child(2) {
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate 4s linear infinite;
+}
+
+.ring i:nth-child(3) {
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate 10s linear infinite;
+}
+
+
+.ring:hover i {
+    border: 6px solid var(--clr);
+    filter: drop-shadow(0 0 20px var(--clr));
+}
+
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes animate2 {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@media (max-width: 600px) {
+    .intro-content .logo1 {
+        width: 50vw; 
+        margin-top: 10vh; 
+    }
+
+    .ring {
+        width: 60vw; 
+        height: 60vw;
+    }
+
+    .ring i {
+        border: 2px solid #572f02;
+    }
+}
+
+
+@media (max-width: 900px) {
+    .intro-content .logo1 {
+        width: 35vw; 
+    }
+
+    .ring {
+        width: 45vw; 
+        height: 45vw;
+    }
+}
+
