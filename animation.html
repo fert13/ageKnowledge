@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animation</title>
+    <link rel="stylesheet" href="css.css">
+   
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+</head>
+<body>
+
+<div class="ring">
+    <i style="--clr:#4d3201;"></i>
+    <i style="--clr:#2b0707;"></i>
+    <i style="--clr:#c59f67;"></i>
+    <div id="introPage">
+        <div class="intro-content">
+            <img class="logo1" src="Assets/plateau-01.png"> <br><br><p>Loading..</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        
+        setTimeout(function() {
+            
+            anime({
+                targets: '.ring',
+                opacity: 0, 
+                duration: 1000, 
+                easing: 'easeOutQuad', 
+                complete: function() {
+                    document.querySelector('.ring').style.display = 'none'; 
+                    
+                    
+                    var introPage = document.getElementById('introPage');
+                    introPage.classList.add('showContent'); 
+
+                   
+                    setTimeout(function() {
+                        window.location.href = "index.html"; 
+                    }, 500); 
+                }
+            });
+        }, 3000); 
+    };
+</script>
+
+</body>
+</html>
