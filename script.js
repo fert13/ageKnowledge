@@ -179,102 +179,102 @@ if(!localStorage.getItem('player1')){
 const difficultQuestions = [
     {
       question: "Qui a inventé la machine à vapeur ?",
-      options: ["Thomas Edison", "James Watt*", "Henry Ford"],
+      options: ["Thomas Edison", "James Watt", "Henry Ford"],
       answer: "James Watt",
     },
     {
       question: "Quelle invention est attribuée à Eli Whitney ?",
-      options: ["Le coton gin*", "La machine à vapeur", "Le télégraphe électrique"],
+      options: ["Le coton gin", "La machine à vapeur", "Le télégraphe électrique"],
       answer: "Le coton gin",
     },
     {
       question: "Qui est l'inventeur de l'ampoule électrique ?",
-      options: ["Nikola Tesla", "Thomas Edison*", "Alexander Graham Bell"],
+      options: ["Nikola Tesla", "Thomas Edison", "Alexander Graham Bell"],
       answer: "Thomas Edison",
     },
     {
       question: "Qui est l'inventeur du télégraphe électrique ?",
-      options: ["Georges Stephenson", "James Hargreaves", "Samuel Morse*"],
+      options: ["Georges Stephenson", "James Hargreaves", "Samuel Morse"],
       answer: "Samuel Morse",
     },
     {
       question: "Qui a élaboré le processus Bessemer ?",
-      options: ["Andrew Carnegie", "Henry Bessemer*", "Robert Fulton"],
+      options: ["Andrew Carnegie", "Henry Bessemer", "Robert Fulton"],
       answer: "Henry Bessemer",
     },
     {
       question: "Qui a amélioré le processus Bessemer ?",
-      options: ["Robert Mushet", "Robert Fulton", "Henry Bessemer*"],
+      options: ["Robert Mushet", "Robert Fulton", "Henry Bessemer"],
       answer: "Henry Bessemer",
     },
     {
       question: "Quel a été le titre de la réunion où Bessemer a décrit pour la première fois le processus Bessemer ?",
-      options: ["La fabrication du fer malléable et de l'acier sans combustible*", "La réunion de Wonka", "La vulcanisation du caoutchouc"],
+      options: ["La fabrication du fer malléable et de l'acier sans combustible", "La réunion de Wonka", "La vulcanisation du caoutchouc"],
       answer: "La fabrication du fer malléable et de l'acier sans combustible",
     },
     {
       question: "Quelle a été la contribution de Georges Stephenson lors de la Révolution industrielle ?",
-      options: ["Il a développé le téléphone", "Il a inventé la locomotive à vapeur*", "Il a inventé le moteur à combustion"],
+      options: ["Il a développé le téléphone", "Il a inventé la locomotive à vapeur", "Il a inventé le moteur à combustion"],
       answer: "Il a inventé la locomotive à vapeur",
     },
     {
       question: "Qui a inventé la machine à filer (Spinning Jenny) ?",
-      options: ["Richard Arkwright", "James Hargreaves*", "Eli Whitney"],
+      options: ["Richard Arkwright", "James Hargreaves", "Eli Whitney"],
       answer: "James Hargreaves",
     },
     {
       question: "Pourquoi la Spinning Jenny a-t-elle été remplacée par le water frame ?",
-      options: ["Parce que le fil produit par la Jenny n'était pas assez solide*", "Parce que la nouvelle machine était plus rapide", "Parce que la Spinning Jenny était trop vieille"],
+      options: ["Parce que le fil produit par la Jenny n'était pas assez solide", "Parce que la nouvelle machine était plus rapide", "Parce que la Spinning Jenny était trop vieille"],
       answer: "Parce que le fil produit par la Jenny n'était pas assez solide",
     },
     {
       question: "Quel processus d'industrialisation Henry Ford a-t-il créé ?",
-      options: ["La chaîne de montage*", "La machine à vapeur", "Les locomotives à vapeur"],
+      options: ["La chaîne de montage", "La machine à vapeur", "Les locomotives à vapeur"],
       answer: "La chaîne de montage",
     },
     {
       question: "Qui est le pionnier de l'industrie de l'acier aux États-Unis ?",
-      options: ["Eli Whitney", "Andrew Carnegie*", "Henry Bessemer"],
+      options: ["Eli Whitney", "Andrew Carnegie", "Henry Bessemer"],
       answer: "Andrew Carnegie",
     },
     {
       question: "Quelle invention est attribuée à Samuel Morse ?",
-      options: ["Le téléphone", "L'ampoule électrique", "Le télégraphe*"],
+      options: ["Le téléphone", "L'ampoule électrique", "Le télégraphe"],
       answer: "Le télégraphe",
     },
     {
       question: "Quelles ont été les principales contributions des frères Wright lors de la révolution industrielle ?",
-      options: ["L'invention du téléphone", "L'invention de la première voiture", "Le premier avion motorisé*"],
+      options: ["L'invention du téléphone", "L'invention de la première voiture", "Le premier avion motorisé"],
       answer: "Le premier avion motorisé",
     },
     {
       question: "Quels sont les noms complets des frères Wright ?",
-      options: ["Orville Wright et Wilbur Wright*", "Johnson Wright et Jon Wright", "Patrick Wright et Ian Wright"],
+      options: ["Orville Wright et Wilbur Wright", "Johnson Wright et Jon Wright", "Patrick Wright et Ian Wright"],
       answer: "Orville Wright et Wilbur Wright",
     },
     {
       question: "Comment l'invention du téléphone a-t-elle été révolutionnaire ?",
-      options: ["Communiquer par texte à distance", "Parler à distance en temps réel*", "Automatiser la production de masse"],
+      options: ["Communiquer par texte à distance", "Parler à distance en temps réel", "Automatiser la production de masse"],
       answer: "Parler à distance en temps réel",
     },
     {
       question: "Quelle a été l'innovation apportée par Robert Fulton ?",
-      options: ["L'invention du téléphone", "L'invention de la locomotive à vapeur*", "L'invention de la dynamite"],
+      options: ["L'invention du téléphone", "L'invention de la locomotive à vapeur", "L'invention de la dynamite"],
       answer: "L'invention de la locomotive à vapeur",
     },
     {
       question: "Pourquoi la machine à vapeur de James Watt a-t-elle été considérée comme une amélioration par rapport à la précédente ?",
-      options: ["Moins de consommation d'énergie*", "Plus grande", "Fonctionnement sans charbon"],
+      options: ["Moins de consommation d'énergie", "Plus grande", "Fonctionnement sans charbon"],
       answer: "Moins de consommation d'énergie",
     },
     {
       question: "Qui a développé la vulcanisation du caoutchouc ?",
-      options: ["Richard Arkwright", "Charles Goodyear*", "Henry Ford"],
+      options: ["Richard Arkwright", "Charles Goodyear", "Henry Ford"],
       answer: "Charles Goodyear",
     },
     {
       question: "Quelles ont été les principales contributions de Nikola Tesla ?",
-      options: ["L'invention du courant alternatif (AC)*", "L'invention du courant continu (DC)", "L'invention de l'ampoule électrique"],
+      options: ["L'invention du courant alternatif (AC)", "L'invention du courant continu (DC)", "L'invention de l'ampoule électrique"],
       answer: "L'invention du courant alternatif (AC)",
     }
   ];
@@ -282,67 +282,67 @@ const difficultQuestions = [
 const easyQuestions = [
     {
         question: "Comment Andrew Carnegie a-t-il influencé l'industrie américaine ?",
-        options: ["En développant l'industrie de l'acier*", "En inventant les machines à vapeur", "En construisant la première usine automobile"],
+        options: ["En développant l'industrie de l'acier", "En inventant les machines à vapeur", "En construisant la première usine automobile"],
         answer: "En développant l'industrie de l'acier",
       },
       {
         question: "Quelle innovation a été introduite par George Stephenson ?",
-        options: ["Le bateau à vapeur", "La locomotive à vapeur*", "La machine à filer"],
+        options: ["Le bateau à vapeur", "La locomotive à vapeur", "La machine à filer"],
         answer: "La locomotive à vapeur",
       },
       {
         question: "Qui a inventé la dynamite ?",
-        options: ["Thomas Edison", "Alfred Nobel*", "Alexander Graham Bell"],
+        options: ["Thomas Edison", "Alfred Nobel", "Alexander Graham Bell"],
         answer: "Alfred Nobel",
       },
       {
         question: "Quelles ont été les principales différences entre Nikola Tesla et Thomas Edison lors de la révolution industrielle ?",
-        options: ["Edison soutenait le courant alternatif et Tesla soutenait le courant continu", "Tesla soutenait le courant alternatif et Edison soutenait le courant continu*", "Edison a inventé l'ampoule électrique et Tesla a inventé la machine à vapeur"],
+        options: ["Edison soutenait le courant alternatif et Tesla soutenait le courant continu", "Tesla soutenait le courant alternatif et Edison soutenait le courant continu", "Edison a inventé l'ampoule électrique et Tesla a inventé la machine à vapeur"],
         answer: "Tesla soutenait le courant alternatif et Edison soutenait le courant continu",
       },
       {
         question: "Quand la révolution industrielle a-t-elle commencé ?",
-        options: ["1760*", "1780", "1740"],
+        options: ["1760", "1780", "1740"],
         answer: "1760",
       },
       {
         question: "Où la première révolution industrielle a-t-elle commencé ?",
-        options: ["États-Unis", "Allemagne", "Royaume-Uni*"],
+        options: ["États-Unis", "Allemagne", "Royaume-Uni"],
         answer: "Royaume-Uni",
       },
       {
         question: "Quel est l'équivalent électrique d'un cheval-vapeur ?",
-        options: ["746W*", "846A", "1450MWh"],
+        options: ["746W", "846A", "1450MWh"],
         answer: "746W",
       },
       {
         question: "Qu'est-ce que la révolution industrielle ?",
-        options: ["Une transition de la société féodale vers une société avancée", "Une transition d'une société agraire et artisanale vers une société industrielle et commerciale*", "Une transition d'un régime autoritaire à un régime démocratique"],
+        options: ["Une transition de la société féodale vers une société avancée", "Une transition d'une société agraire et artisanale vers une société industrielle et commerciale", "Une transition d'un régime autoritaire à un régime démocratique"],
         answer: "Une transition d'une société agraire et artisanale vers une société industrielle et commerciale",
       },
       {
         question: "Quelle région du monde a été la première affectée par la révolution industrielle ?",
-        options: ["Europe occidentale et Amérique du Nord*", "Europe occidentale et Europe de l'Est", "Amérique du Nord et Extrême-Orient"],
+        options: ["Europe occidentale et Amérique du Nord", "Europe occidentale et Europe de l'Est", "Amérique du Nord et Extrême-Orient"],
         answer: "Europe occidentale et Amérique du Nord",
       },
       {
         question: "Quand la deuxième révolution industrielle a-t-elle commencé ?",
-        options: ["1817", "1870", "1860*"],
+        options: ["1817", "1870", "1860"],
         answer: "1860",
       },
       {
         question: "Où la deuxième révolution industrielle a-t-elle commencé ?",
-        options: ["États-Unis*", "Royaume-Uni", "France"],
+        options: ["États-Unis", "Royaume-Uni", "France"],
         answer: "États-Unis",
       },
       {
         question: "Quelle industrie a été la première à être transformée par la révolution industrielle ?",
-        options: ["Industrie alimentaire", "Industrie textile*", "Industrie du charbon"],
+        options: ["Industrie alimentaire", "Industrie textile", "Industrie du charbon"],
         answer: "Industrie textile",
       },
       {
         question: "Quel a été l'impact principal de la révolution industrielle sur la société ?",
-        options: ["Augmentation du niveau de vie*", "Augmentation du taux de natalité", "Meilleure couverture sociale"],
+        options: ["Augmentation du niveau de vie", "Augmentation du taux de natalité", "Meilleure couverture sociale"],
         answer: "Augmentation du niveau de vie",
       }
 ];
@@ -415,7 +415,10 @@ const setPlayerTurn = (playerTurnIndex) => {
     //Filtering the board details array and finding the currentTeamTurn object
     let boardDetailObject = boardDetails.filter(obj => obj.boardColor === currentTeamTurn);
     boardDetailObject[0].board.classList.toggle('active');
-    showNotification(`Tour du joueur ${boardDetailObject[0].player} de répondre à une question !  `, "info");
+    setTimeout(    
+        showNotification(`Tour du joueur ${boardDetailObject[0].player} de répondre à une question !  `, "info"),
+        1500
+    )
     loadQuestion()
 }
 setPlayerTurn(0);
@@ -426,10 +429,10 @@ const teamAnswer = (selectedOption, teamColor) => {
     if (team) {
         if(questions[currentIndex].options.includes(selectedOption) && selectedOption === questions[currentIndex].answer) {
             localStorage.setItem(`${team.boardColor}Answer`, true);
-            showNotification("Bonne réponse !", "success");
+            showNotification("Bonne réponse ", "success");
             rollDiceButton.disabled = false;
             setTimeout(() => {
-                showNotification("Lancer le dé !", "success");
+                showNotification("Lancer le dé ", "success");
             }, 1000);
             // if(teamColor !== 'blue' && localStorage.getItem('gameMode') === 'Bot'){
             //     rollDiceButtonForBot()
@@ -437,7 +440,7 @@ const teamAnswer = (selectedOption, teamColor) => {
         }else {
             rollDiceButton.disabled = true;
             localStorage.setItem(`${team.boardColor}Answer`, false);
-            showNotification("Mauvaise réponse!", "error");
+            showNotification("Mauvaise réponse ", "error");
             setTimeout(() => {
                 nextTeamTurn()
             }, 2000);
@@ -465,9 +468,10 @@ const nextTeamTurn = async () => {
 
     //Here the setPlayerTurn is called twice to remove the active class from the last board and add to the new team baord
     setPlayerTurn(prevPlayerTurnIndex);
-    setPlayerTurn(currentPlayerTurnIndex);
+    setPlayerTurn(currentPlayerTurnIndex)
     await delay(500);
     currentIndex = (currentIndex + 1) % questions.length;
+    rollDiceButton.disabled = true
     loadQuestion()
 
     // if (playerTurns[currentPlayerTurnIndex] !== 'blue') {
@@ -494,18 +498,6 @@ function cardBelotteCreate() {
     addShuffleEffect();
 }
 
-function moveCard(card) {
-    const rightZone = document.querySelector(".right-zone");
-
-    const clone = card.cloneNode(true);
-    document.body.appendChild(clone);
-    clone.classList.add("moving");
-
-    setTimeout(() => {
-        rightZone.removeChild(card);
-        cardBelotteCreate();
-    }, 1200);
-}
 
 function addShuffleEffect() {
     const cards = document.querySelectorAll(".belotte-card");
@@ -558,11 +550,13 @@ const showDangerBonusCard = (bonus, piece) => {
 
     if (symbols[piece] && bonus >= 5 && bonus <= 10) {
         addShuffleEffect()
-        document.getElementById('card').style.display = 'none';
-        document.getElementById('card-container').style.display = 'block';
-        createCard(bonus, symbols[piece]);
-    }
-    else {
+        setTimeout(()=>{
+            createCard(bonus, symbols[piece]);
+            console.log(bonus)
+            document.getElementById('card').style.display = 'none';
+            document.getElementById('card-container').style.display = 'block';
+
+        }, 3000 )
         document.getElementById('card').style.display = 'block';
         document.getElementById('card-container').style.display = 'none';
     }

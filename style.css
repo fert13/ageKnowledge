@@ -476,7 +476,7 @@ canvas{
     }
 }
 
-/* Style de base pour la notification */
+
 .notification {
     position: fixed;
     top: 20px;
@@ -485,7 +485,7 @@ canvas{
     border-radius: 8px;
     color: white;
     font-weight: bold;
-    display: none; /* Pour que la notification soit cachée au début */
+    display: none;
     font-size: 16px;
     z-index: 100;
     max-width: 300px;
@@ -494,12 +494,11 @@ canvas{
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* Icône de notification */
+
 .notification-icon {
     margin-right: 10px;
 }
 
-/* Icone de fermeture */
 .close-btn {
     background: none;
     color: white;
@@ -513,19 +512,19 @@ canvas{
 
 /* Styles pour chaque type de notification */
 .success {
-    background-color: green;
+    background-color: rgb(7, 168, 7);
 }
 
 .error {
-    background-color: red;
+    background-color: rgb(177, 5, 5);
 }
 
 .info {
-    background-color: #00acff;
+    background-color: #078bd3;
 }
 
 .warning {
-    background-color: yellow;
+    background-color: rgb(114, 114, 3);
     color: black;
 }
 
