@@ -1,23 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Configuration</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 </head>
 <body>
-        <div id="homePage">
-            <h1>Age of Knowledge</h1>
-            <img class="logo" src="/Assets/logo.png" alt="">
-            <div>
-                <!-- Buttons for game -->
-                <button onclick="setNumPvP(2)">Jouer à 02 avec un bot</button>
-                <button onclick="setNumPvP(2)">Jouer à 02 avec manette</button>
-            </div>
+    <div id="homePage">
+        <div class="box3">
+            <h1 class="animated-text">Configuration du jeu</h1>
+            <div class="configuration-mode">
+                <h3>Choix du niveau de jeu <span>*</span></h3>
+                <div class="levels">
+                    <img src="Assets/Image1.png" alt="Niveau 1" onclick="selectLevel(1)">
+                    <img src="Assets/Image1.png" alt="Niveau 2" onclick="selectLevel(2)">
+                </div>
+                <h3>Choix du type de jeu <span>*</span></h3>
+                <div class="levels">
+                    <button class="option-jeu" onclick="setGameMode('bot')">Jouer à 2 avec 🤖</button>
+                    <button class="option-jeu" onclick="setGameMode('manette')">Jouer à 2 avec 🎮</button>
+                </div>
+            
+                <div id="playerConfig" style="display: none;">
+                    <div id="playerFields"></div>
+                    <button class="configuration-bouton" onclick="saveConfig()" >Jouer à AKG</button>
+                </div>
+           </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-        <script   src="./initial.js"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="./configuration.js"></script>
 </body>
 </html>

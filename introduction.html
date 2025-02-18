@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age of knowledge</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+</head>
+<body>
+    <div class="introductionPage">
+        <div class="box active">
+            <img class="top-left" src="Assets/interrogatePonctuation.png" alt="Image en haut à gauche">
+            <img class="bottom-right" src="Assets/interrogatePonctuation.png" alt="Image en bas à droite">
+            <svg width="600" height="250" viewBox="0 0 600 250">
+                <defs>
+                    <path id="arcPath" d="M 100,150 A 200,100 0 0,1 500,150" />
+                </defs>
+                <text class="animated-text" >
+                    <textPath href="#arcPath" startOffset="50%" text-anchor="middle" fill="#f9bc74">
+                        Age of Knowledge
+                    </textPath>
+                </text>
+            </svg>
+            <div class="slideshow-container">
+                <img class="introduction-image active cube" src="Assets/dé.png" alt="">
+                <!-- <img class="introduction-image  carte" src="Assets/Image1.png" alt=""> -->
+            </div>
+            <h2 id="typingText">Le jeu du savoir !</h2>
+            <button id="playButton" class="play-btn">En savoir plus</button>
+        </div>
+        <div class="box2">
+            <h1 class="animated-text"> Les principes du jeu </h1>
+            <div class="game-rules">
+                <p> Age Of Knowledge est un jeu de société qui se joue entre 02 ou 04 joueurs. Chaque joueur a <strong> 04 jetons</strong> et doit les emmener au centre du plateau et peut faire les differentes actions ci-dessous.</p>
+                <ul>
+                    <li>📜 Piocher une <strong>carte question</strong></li>
+                    <li>✔️ Répondre correctement ➝ Avancer du nombre obtenu</li>
+                    <li>🎲 Lancer un <strong>dé</strong></li>
+                    <li>❌ Mauvaise réponse ➝ Rester sur place</li>
+                </ul>
+                <h3>Objectif </h3>
+                <p>Etre le premier joueur à atteindre le centre du plateau avec ses deux jetons.</p>
+            </div>
+            
+           <div>
+                <button>Voir une démo</button>
+                <button id="configuration">Commencer 🎮</button>
+           </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="introduction.js"></script>
+    <script src="loading.js"></script>
+</body>
+</html>

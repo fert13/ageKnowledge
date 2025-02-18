@@ -1,164 +1,30 @@
-<!DOCTYPE html>
+s<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ludo Javascript</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <title>Chargement...</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="homePage">
-        <h1>Age of Knowledge</h1>
-        <img class="logo" src="/Assets/logo.png" alt="">
-        <div>
-            <button onclick="setNumPvP(2)">Jouer à 02 avec un bot</button>
-            <button onclick="setNumPvP(2)">Jouer à 02 avec manette</button>
+    <div id="loadingPage">
+        <img class="logo" src="Assets/logo.png" alt="">
+        <div class="progress-container">
+            <div class="progress-bar"></div>
         </div>
     </div>
 
-    <!-- Navbar -->
-    <div id="navbar">
-        <div class="navbar-left">
-            <button class="hamburger" id="hamburgerMenu">
-                <i class="fa fa-bars"></i>
-            </button>
-        </div>
-        <div class="navbar-right">
-            <div id="notification" class="notification">
-                <span id="notificationIcon" class="notification-icon"></span>
-                <span id="notificationText">Notifications</span>
-                <button id="closeNotification" class="close-btn">&times;</button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="container">
-                <!-- Sidebar -->
-    <div id="sidebar">
-        <div id="sidebarHeader">
-            <h2>Cartes de Questions</h2>
-        </div>
-        <div class="card" id="card">
-            <h3 id="question"></h3>
-            <p class="message" id="message"></p>
-            <div class="options" id="options"></div>
-        </div>
-    </div>
-
-
-<div class="ludoContainer">
-    <div id="ludoBoard">
-        <div id="red-Board" class="board">
-        </div>
-        <div id="green-Path" class="verticalPath">
-            <div class="ludoBox" id="r11"></div>
-            <div class="ludoBox" id="r12"></div>
-            <div class="ludoBox" id="r13"></div>
-            <div class="ludoBox" id="r10"></div>
-            <div class="ludoBox greenLudoBox"  id="gh1"></div>
-            <div class="ludoBox greenLudoBox" id="g1"></div>
-            <div class="ludoBox" id="r9">
-                <i class="fa-solid fa-regular fa-skull-crossbones"></i>
-            </div>
-            <div class="ludoBox greenLudoBox" id="gh2"></div>
-            <div class="ludoBox" id="g2"></div>
-            <div class="ludoBox" id="r8"></div>
-            <div class="ludoBox greenLudoBox" id="gh3"></div>
-            <div class="ludoBox" id="g3"></div>
-            <div class="ludoBox" id="r7"></div>
-            <div class="ludoBox greenLudoBox" id="gh4"></div>
-            <div class="ludoBox" id="g4"></div>
-            <div class="ludoBox" id="r6"></div>
-            <div class="ludoBox greenLudoBox" id="gh5"></div>
-            <div class="ludoBox" id="g5"></div>
-        </div>
-        <div id="green-Board" class="board">
-        </div>
-        <div id="red-Path" class="horizontalPath">
-            <div class="ludoBox" id="b13"></div>
-            <div class="ludoBox redLudoBox" id="r1"></div>
-            <div class="ludoBox" id="r2"></div>
-            <div class="ludoBox" id="r3"></div>
-            <div class="ludoBox" id="r4"></div>
-            <div class="ludoBox" id="r5"></div>
-            <div class="ludoBox" id="b12"></div>
-            <div class="ludoBox redLudoBox" id="rh1"></div>
-            <div class="ludoBox redLudoBox" id="rh2"></div>
-            <div class="ludoBox redLudoBox" id="rh3"></div>
-            <div class="ludoBox redLudoBox" id="rh4"></div>
-            <div class="ludoBox redLudoBox" id="rh5"></div>
-            <div class="ludoBox" id="b11"></div>
-            <div class="ludoBox" id="b10"></div>
-            <div class="ludoBox" id="b9">
-                <i class=" fa-regular fa-brands fa-canadian-maple-leaf"></i>
-            </div>
-            <div class="ludoBox" id="b8"></div>
-            <div class="ludoBox" id="b7"></div>
-            <div class="ludoBox" id="b6"></div>
-        </div>
-        <div id="win-Zone"></div>
-        <div id="yellow-Path" class="horizontalPath">
-            <div class="ludoBox" id="g6"></div>
-            <div class="ludoBox" id="g7"></div>
-            <div class="ludoBox" id="g8"></div>
-            <div class="ludoBox" id="g9">
-                <i class="fa-regular fa-solid fa-heart"></i>
-            </div>
-            <div class="ludoBox" id="g10"></div>
-            <div class="ludoBox" id="g11"></div>
-            <div class="ludoBox yellowLudoBox" id="yh5"></div>
-            <div class="ludoBox yellowLudoBox" id="yh4"></div>
-            <div class="ludoBox yellowLudoBox" id="yh3"></div>
-            <div class="ludoBox yellowLudoBox" id="yh2"></div>
-            <div class="ludoBox yellowLudoBox" id="yh1"></div>
-            <div class="ludoBox" id="g12"></div>
-            <div class="ludoBox" id="y5"></div>
-            <div class="ludoBox" id="y4"></div>
-            <div class="ludoBox" id="y3"></div>
-            <div class="ludoBox" id="y2"></div>
-            <div class="ludoBox yellowLudoBox" id="y1"></div>
-            <div class="ludoBox" id="g13"></div>
-        </div>
-        <div id="blue-Board" class="board">
-        </div>
-        <div id="blue-Path" class="verticalPath">
-            <div class="ludoBox" id="b5"></div>
-            <div class="ludoBox blueLudoBox" id="bh5"></div>
-            <div class="ludoBox" id="y6"></div>
-            <div class="ludoBox" id="b4"></div>
-            <div class="ludoBox blueLudoBox" id="bh4"></div>
-            <div class="ludoBox" id="y7"></div>
-            <div class="ludoBox" id="b3"></div>
-            <div class="ludoBox blueLudoBox" id="bh3"></div>
-            <div class="ludoBox" id="y8"></div>
-            <div class="ludoBox" id="b2"></div>
-            <div class="ludoBox blueLudoBox" id="bh2"></div>
-            <div class="ludoBox" id="y9">
-                <i class="fa-regular fa-solid fa-square-full"></i>
-            </div>
-            <div class="ludoBox blueLudoBox" id="b1"></div>
-            <div class="ludoBox blueLudoBox" id="bh1"></div>
-            <div class="ludoBox" id="y10"></div>
-            <div class="ludoBox" id="y13"></div>
-            <div class="ludoBox" id="y12"></div>
-            <div class="ludoBox" id="y11"></div>
-        </div>
-        <div id="yellow-Board" class="board">
-        </div>
-    </div>
-
-    <!-- <div id="dangerNumberDisplay"></div> -->
-    <div id="card-container"></div>
-    <div class="rollingDice">
-        <img src="./Assets/Dice_1.png" alt="Roll_Dice"  id="rollDice">
-        <button id="rollDiceButton"> Lancer</button>
-    </div>
-</div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script   src="./initial.js"></script>
+    <script>
+        const progressBar = document.querySelector('.progress-bar');
+        let width = 0;
+        const interval = setInterval(() => {
+            width += 1;
+            progressBar.style.width = width + "%";
+            if (width >= 100) {
+                clearInterval(interval);
+                window.location.href = "introduction.html"; 
+            }
+        }, 50);
+    </script>
 </body>
 </html>
