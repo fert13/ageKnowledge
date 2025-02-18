@@ -25,10 +25,9 @@ let currentIndex = 0;
 let randomBonus = 0;
 let diceResult;
 let numPvP = 2;
-
-
+let symbols = ['♠', '♥', '♦', '♣'];
+let numbers = ['4', '5', '6', '7', '8', '9'];
 let pathArray = ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12', 'r13', 'g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9', 'g10', 'g11', 'g12', 'g13', 'y1', 'y2', 'y3', 'y4', 'y5', 'y6', 'y7', 'y8', 'y9', 'y10', 'y11', 'y12', 'y13', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12', 'b13'];
-
 let homePathEntries = {
     blue: ['bh1', 'bh2', 'bh3', 'bh4', 'bh5', 'home'],
     yellow: ['yh1', 'yh2', 'yh3', 'yh4', 'yh5', 'home'],
@@ -45,7 +44,6 @@ let safePaths = [
 ];
 
 let bonusPaths = ['r9', 'b9','y9','g9'];
-
 let homePathArray = [
     ...homePathEntries.blue,
     ...homePathEntries.red,
@@ -54,8 +52,6 @@ let homePathArray = [
 ]
 
 
-
-//Setting Player Pieces Class
 class Player_Piece {
 
     constructor(team, position, score, homePathEntry, playerId, gameEntry) {
@@ -65,13 +61,11 @@ class Player_Piece {
         this.homePathEntry = homePathEntry;
         this.id = playerId;
         this.gameEntry = gameEntry;
-        this.status = 0; //Initially it is zero means the piece is locked and  1 means it is unlocked
-
-        this.initialPosition = position; //To return the piece to the board when killed
+        this.status = 0; 
+        this.initialPosition = position;
     }
-
     unlockPiece() {
-        this.status = 1; //1 Means unlocked
+        this.status = 1; 
         this.position = this.gameEntry;
         let element = document.querySelector(`[piece_id="${this.id}"]`);
         let toAppendDiv = document.getElementById(this.gameEntry);
@@ -106,7 +100,6 @@ class Player_Piece {
         this.score += filteredArray.length;
     }
 
-    //Function to return the piece to the locked position when killed
     sentMeToBoard() {
         this.score = 0;
         this.position = this.initialPosition;
@@ -116,17 +109,13 @@ class Player_Piece {
         toAppendDiv.appendChild(element);
     }
 }
-
-let playerPieces = [];//This will hold all pieces from all teams
-
-
+let playerPieces = [];
 let boardDetails = [
     { boardColor: 'blue', board: blue_Board, homeEntry: 'y13', gameEntry: 'b1', hasAnswer: localStorage.getItem('blueAnswer'), player: localStorage.getItem('player1') },
     { boardColor: 'green', board: green_Board, homeEntry: 'r13', gameEntry: 'g1', hasAnswer: localStorage.getItem('greenAnswer'), player: localStorage.getItem('player2') },
     { boardColor: 'red', board: red_Board, homeEntry: 'b13', gameEntry: 'r1', hasAnswer: localStorage.getItem('redAnswer'), player:localStorage.getItem('player3') },
     { boardColor: 'yellow', board: yellow_Board, homeEntry: 'g13', gameEntry: 'y1', hasAnswer: localStorage.getItem('yellowAnswer'), player:localStorage.getItem('player4') }
 ];
-
 
 for (let i = 0; i < numPvP; i++) {
     let boardColor = boardDetails[i].boardColor;
@@ -166,8 +155,6 @@ for (let i = 0; i < numPvP; i++) {
     boardDetails[i].board.append(parentDiv);
 }
 
-
-
 if (numPvP === 2) {
     playerTurns = ['blue', 'green'];
 } else if (numPvP === 3) {
@@ -183,27 +170,188 @@ if(localStorage.getItem('gameMode')==='manette'){
     document.getElementById('joueurs-name').innerHTML=`<p>${localStorage.getItem('player1')} vs Bot` 
 }
 
-
-
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const questions = [
+if(!localStorage.getItem('player1')){
+    window.location = 'configuration.html'
+}
+
+const difficultQuestions = [
     {
-        question: "Quel est le langage principal utilisé pour le développement web frontend ?",
-        options: ["Python", "JavaScript", "C#", "Ruby"],
-        answer: "JavaScript",
+      question: "Qui a inventé la machine à vapeur ?",
+      options: ["Thomas Edison", "James Watt*", "Henry Ford"],
+      answer: "James Watt",
     },
     {
-        question: "Quel outil est utilisé pour styliser une page web ?",
-        options: ["HTML", "CSS", "Java", "SQL"],
-        answer: "CSS",
+      question: "Quelle invention est attribuée à Eli Whitney ?",
+      options: ["Le coton gin*", "La machine à vapeur", "Le télégraphe électrique"],
+      answer: "Le coton gin",
     },
     {
-        question: "Quel framework est populaire pour construire des interfaces utilisateur en React ?",
-        options: ["Laravel", "Django", "Next.js", "Spring Boot"],
-        answer: "Next.js",
+      question: "Qui est l'inventeur de l'ampoule électrique ?",
+      options: ["Nikola Tesla", "Thomas Edison*", "Alexander Graham Bell"],
+      answer: "Thomas Edison",
     },
+    {
+      question: "Qui est l'inventeur du télégraphe électrique ?",
+      options: ["Georges Stephenson", "James Hargreaves", "Samuel Morse*"],
+      answer: "Samuel Morse",
+    },
+    {
+      question: "Qui a élaboré le processus Bessemer ?",
+      options: ["Andrew Carnegie", "Henry Bessemer*", "Robert Fulton"],
+      answer: "Henry Bessemer",
+    },
+    {
+      question: "Qui a amélioré le processus Bessemer ?",
+      options: ["Robert Mushet", "Robert Fulton", "Henry Bessemer*"],
+      answer: "Henry Bessemer",
+    },
+    {
+      question: "Quel a été le titre de la réunion où Bessemer a décrit pour la première fois le processus Bessemer ?",
+      options: ["La fabrication du fer malléable et de l'acier sans combustible*", "La réunion de Wonka", "La vulcanisation du caoutchouc"],
+      answer: "La fabrication du fer malléable et de l'acier sans combustible",
+    },
+    {
+      question: "Quelle a été la contribution de Georges Stephenson lors de la Révolution industrielle ?",
+      options: ["Il a développé le téléphone", "Il a inventé la locomotive à vapeur*", "Il a inventé le moteur à combustion"],
+      answer: "Il a inventé la locomotive à vapeur",
+    },
+    {
+      question: "Qui a inventé la machine à filer (Spinning Jenny) ?",
+      options: ["Richard Arkwright", "James Hargreaves*", "Eli Whitney"],
+      answer: "James Hargreaves",
+    },
+    {
+      question: "Pourquoi la Spinning Jenny a-t-elle été remplacée par le water frame ?",
+      options: ["Parce que le fil produit par la Jenny n'était pas assez solide*", "Parce que la nouvelle machine était plus rapide", "Parce que la Spinning Jenny était trop vieille"],
+      answer: "Parce que le fil produit par la Jenny n'était pas assez solide",
+    },
+    {
+      question: "Quel processus d'industrialisation Henry Ford a-t-il créé ?",
+      options: ["La chaîne de montage*", "La machine à vapeur", "Les locomotives à vapeur"],
+      answer: "La chaîne de montage",
+    },
+    {
+      question: "Qui est le pionnier de l'industrie de l'acier aux États-Unis ?",
+      options: ["Eli Whitney", "Andrew Carnegie*", "Henry Bessemer"],
+      answer: "Andrew Carnegie",
+    },
+    {
+      question: "Quelle invention est attribuée à Samuel Morse ?",
+      options: ["Le téléphone", "L'ampoule électrique", "Le télégraphe*"],
+      answer: "Le télégraphe",
+    },
+    {
+      question: "Quelles ont été les principales contributions des frères Wright lors de la révolution industrielle ?",
+      options: ["L'invention du téléphone", "L'invention de la première voiture", "Le premier avion motorisé*"],
+      answer: "Le premier avion motorisé",
+    },
+    {
+      question: "Quels sont les noms complets des frères Wright ?",
+      options: ["Orville Wright et Wilbur Wright*", "Johnson Wright et Jon Wright", "Patrick Wright et Ian Wright"],
+      answer: "Orville Wright et Wilbur Wright",
+    },
+    {
+      question: "Comment l'invention du téléphone a-t-elle été révolutionnaire ?",
+      options: ["Communiquer par texte à distance", "Parler à distance en temps réel*", "Automatiser la production de masse"],
+      answer: "Parler à distance en temps réel",
+    },
+    {
+      question: "Quelle a été l'innovation apportée par Robert Fulton ?",
+      options: ["L'invention du téléphone", "L'invention de la locomotive à vapeur*", "L'invention de la dynamite"],
+      answer: "L'invention de la locomotive à vapeur",
+    },
+    {
+      question: "Pourquoi la machine à vapeur de James Watt a-t-elle été considérée comme une amélioration par rapport à la précédente ?",
+      options: ["Moins de consommation d'énergie*", "Plus grande", "Fonctionnement sans charbon"],
+      answer: "Moins de consommation d'énergie",
+    },
+    {
+      question: "Qui a développé la vulcanisation du caoutchouc ?",
+      options: ["Richard Arkwright", "Charles Goodyear*", "Henry Ford"],
+      answer: "Charles Goodyear",
+    },
+    {
+      question: "Quelles ont été les principales contributions de Nikola Tesla ?",
+      options: ["L'invention du courant alternatif (AC)*", "L'invention du courant continu (DC)", "L'invention de l'ampoule électrique"],
+      answer: "L'invention du courant alternatif (AC)",
+    }
+  ];
+  
+const easyQuestions = [
+    {
+        question: "Comment Andrew Carnegie a-t-il influencé l'industrie américaine ?",
+        options: ["En développant l'industrie de l'acier*", "En inventant les machines à vapeur", "En construisant la première usine automobile"],
+        answer: "En développant l'industrie de l'acier",
+      },
+      {
+        question: "Quelle innovation a été introduite par George Stephenson ?",
+        options: ["Le bateau à vapeur", "La locomotive à vapeur*", "La machine à filer"],
+        answer: "La locomotive à vapeur",
+      },
+      {
+        question: "Qui a inventé la dynamite ?",
+        options: ["Thomas Edison", "Alfred Nobel*", "Alexander Graham Bell"],
+        answer: "Alfred Nobel",
+      },
+      {
+        question: "Quelles ont été les principales différences entre Nikola Tesla et Thomas Edison lors de la révolution industrielle ?",
+        options: ["Edison soutenait le courant alternatif et Tesla soutenait le courant continu", "Tesla soutenait le courant alternatif et Edison soutenait le courant continu*", "Edison a inventé l'ampoule électrique et Tesla a inventé la machine à vapeur"],
+        answer: "Tesla soutenait le courant alternatif et Edison soutenait le courant continu",
+      },
+      {
+        question: "Quand la révolution industrielle a-t-elle commencé ?",
+        options: ["1760*", "1780", "1740"],
+        answer: "1760",
+      },
+      {
+        question: "Où la première révolution industrielle a-t-elle commencé ?",
+        options: ["États-Unis", "Allemagne", "Royaume-Uni*"],
+        answer: "Royaume-Uni",
+      },
+      {
+        question: "Quel est l'équivalent électrique d'un cheval-vapeur ?",
+        options: ["746W*", "846A", "1450MWh"],
+        answer: "746W",
+      },
+      {
+        question: "Qu'est-ce que la révolution industrielle ?",
+        options: ["Une transition de la société féodale vers une société avancée", "Une transition d'une société agraire et artisanale vers une société industrielle et commerciale*", "Une transition d'un régime autoritaire à un régime démocratique"],
+        answer: "Une transition d'une société agraire et artisanale vers une société industrielle et commerciale",
+      },
+      {
+        question: "Quelle région du monde a été la première affectée par la révolution industrielle ?",
+        options: ["Europe occidentale et Amérique du Nord*", "Europe occidentale et Europe de l'Est", "Amérique du Nord et Extrême-Orient"],
+        answer: "Europe occidentale et Amérique du Nord",
+      },
+      {
+        question: "Quand la deuxième révolution industrielle a-t-elle commencé ?",
+        options: ["1817", "1870", "1860*"],
+        answer: "1860",
+      },
+      {
+        question: "Où la deuxième révolution industrielle a-t-elle commencé ?",
+        options: ["États-Unis*", "Royaume-Uni", "France"],
+        answer: "États-Unis",
+      },
+      {
+        question: "Quelle industrie a été la première à être transformée par la révolution industrielle ?",
+        options: ["Industrie alimentaire", "Industrie textile*", "Industrie du charbon"],
+        answer: "Industrie textile",
+      },
+      {
+        question: "Quel a été l'impact principal de la révolution industrielle sur la société ?",
+        options: ["Augmentation du niveau de vie*", "Augmentation du taux de natalité", "Meilleure couverture sociale"],
+        answer: "Augmentation du niveau de vie",
+      }
 ];
+
+if(localStorage.getItem('gameLevel') === '2'){
+    questions = difficultQuestions;
+} else {
+    questions = easyQuestions;
+}
 
 const showNotification =(message,type) => {
     const notification = document.getElementById('notification');
@@ -329,6 +477,48 @@ const nextTeamTurn = async () => {
     // } 
 }
 
+// empilement des cartes 
+
+function getRandomCard() {
+    const number = numbers[Math.floor(Math.random() * numbers.length)];
+    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+    return `${number} ${symbol}`;
+}
+
+function cardBelotteCreate() {
+    const card = document.createElement("div");
+    card.classList.add("belotte-card");
+    card.textContent = getRandomCard();
+    card.onclick = function () { moveCard(this); };
+    document.querySelector(".right-zone").appendChild(card);
+    addShuffleEffect();
+}
+
+function moveCard(card) {
+    const rightZone = document.querySelector(".right-zone");
+
+    const clone = card.cloneNode(true);
+    document.body.appendChild(clone);
+    clone.classList.add("moving");
+
+    setTimeout(() => {
+        rightZone.removeChild(card);
+        cardBelotteCreate();
+    }, 1200);
+}
+
+function addShuffleEffect() {
+    const cards = document.querySelectorAll(".belotte-card");
+    cards.forEach(card => {
+        card.classList.add("shuffle");
+        setTimeout(() => card.classList.remove("shuffle"), 500);
+    });
+}
+
+for (let i = 0; i < 15; i++) {
+    cardBelotteCreate();
+}
+
 function createCard(value, symbol) {
     const symbols = { 1: "A", 11: "J", 12: "Q", 13: "K" };
     const cardValue = symbols[value] || value;
@@ -366,9 +556,15 @@ const showDangerBonusCard = (bonus, piece) => {
         'b9': '♣'  
     };
 
-    // Vérifie si la pièce a un symbole défini
     if (symbols[piece] && bonus >= 5 && bonus <= 10) {
+        addShuffleEffect()
+        document.getElementById('card').style.display = 'none';
+        document.getElementById('card-container').style.display = 'block';
         createCard(bonus, symbols[piece]);
+    }
+    else {
+        document.getElementById('card').style.display = 'block';
+        document.getElementById('card-container').style.display = 'none';
     }
 };
 
@@ -382,7 +578,7 @@ const giveArrayForMovingPath = (piece) => {
     const specialActions = {
         'r9': () => { 
             if (currentPlayer.hasAnswer) {
-                totalSteps = Math.floor(Math.random() * 5) + 5; // Double les pas
+                totalSteps = Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps, piece.position);
             } else {
                 totalSteps = -4; // Reculer de 4 cases
@@ -413,7 +609,6 @@ const giveArrayForMovingPath = (piece) => {
         }
     };
 
-    // Appliquer l'effet spécial si la pièce est sur une case spéciale
     if (specialActions[piece.position]) {
         specialActions[piece.position]();
     }
