@@ -611,8 +611,6 @@ const giveArrayForMovingPath = (piece) => {
 };
 
 
-
-
 // Fonction pour calculer le déplacement
 const calculateMovingPath = (piece, steps) => {
     let movingArray = [];
