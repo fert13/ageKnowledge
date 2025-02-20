@@ -81,7 +81,9 @@
                         <option value="difficile">Difficile</option>
                     </select>
                 </div>
-    
+
+                
+                
                 <div class="box">
                     
                     <button type="submit" id="startGameBtn">Commencer le jeu</button>
@@ -103,6 +105,12 @@
             </ul>
             <p>Bonne chance et amusez-vous bien !</p><br>
             <button id="okBtn">OK</button> 
+        </div>
+    </div>
+    <div id="customAlert" class="custom-alert">
+        <div class="custom-alert-content">
+            <p id="alertMessage">Veuillez remplir tous les champs !</p>
+            <button id="closeAlertBtn" class="btn">OK</button>
         </div>
     </div>
     <script>
@@ -129,57 +137,85 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script   src="./initial.js"></script>
 <script>
-    //  (masquer l'écran d'accueil et afficher la page du jeu)
-    function startGame() {
-        const introPage = document.getElementById('introPage');
-        const formulaire = document.getElementById('formulaire');
-        const gameRulesModal = document.getElementById('gameRulesModal');
-        // Animer la disparition de l'écran d'accueil
-        introPage.classList.add('animate__fadeOut');
-        setTimeout(() => {
-            introPage.style.display = 'none';  // Cacher l'écran d'accueil après l'animation
-            formulaire.style.display = 'block';  
-           // Afficher la page du jeu
-        }, 1000); // Durée de l'animation (1 seconde)
+   // Fonction pour démarrer le jeu (masquer l'écran d'accueil et afficher la page du jeu)
+function startGame() {
+    const introPage = document.getElementById('introPage');
+    const formulaire = document.getElementById('formulaire');
+    const gameRulesModal = document.getElementById('gameRulesModal');
+
+    // Récupérer les champs de formulaire
+    const player1 = document.getElementById('player1').value;
+    const player2 = document.getElementById('player2') ? document.getElementById('player2').value : null;
+    const numPlayers = document.getElementById('numPlayers').value;
+    const difficulty = document.getElementById('difficulty').value;
+
+    // Sauvegarder dans le sessionStorage
+    sessionStorage.setItem('player1', player1);
+    if (numPlayers == '2') {
+        sessionStorage.setItem('player2', player2);
     }
-    function showGameRules() {
-            const gameRulesModal = document.getElementById('gameRulesModal');
-            gameRulesModal.style.display = 'block'; // Afficher la modale
-        }
+    sessionStorage.setItem('numPlayers', numPlayers);
+    sessionStorage.setItem('difficulty', difficulty);
 
-        // Fonction pour vérifier que tous les champs sont remplis 
-        document.getElementById('startGameBtn').addEventListener('click', function(e) {
-            e.preventDefault(); // Empêcher le formulaire de se soumettre (si c'est un formulaire HTML classique)
+    // Animer la disparition de l'écran d'accueil
+    introPage.classList.add('animate__fadeOut');
+    setTimeout(() => {
+        introPage.style.display = 'none';  // Cacher l'écran d'accueil après l'animation
+        formulaire.style.display = 'block';  // Afficher la page du jeu
+    }, 1000); // Durée de l'animation (1 seconde)
+}
 
-            // Récupérer les champs de formulaire
-            const player1 = document.getElementById('player1').value;
-            const player2 = document.getElementById('player2') ? document.getElementById('player2').value : null;
-            const numPlayers = document.getElementById('numPlayers').value;
-            const difficulty = document.getElementById('difficulty').value;
+// Fonction pour afficher la modale des règles du jeu
+function showGameRules() {
+    const gameRulesModal = document.getElementById('gameRulesModal');
+    gameRulesModal.style.display = 'block'; // Afficher la modale
+}
 
-            // Vérifier si les champs obligatoires sont remplis
-            if (numPlayers == '1' && player1 !== "" && difficulty !== "") {
-                showGameRules(); // Afficher la modale des règles
-            } else if (numPlayers == '2' && player1 !== "" && player2 !== "" && difficulty !== "") {
-                showGameRules(); // Afficher la modale des règles
-            } else {
-                alert("Veuillez remplir tous les champs !"); // Si les champs sont incomplets, afficher une alerte
-            }
-        });
+// Fonction pour afficher une alerte personnalisée
+function showCustomAlert(message) {
+    const alertMessage = document.getElementById('alertMessage');
+    alertMessage.innerText = message; // Mettre le message dans l'alerte
+    const customAlert = document.getElementById('customAlert');
+    customAlert.style.display = 'flex'; // Afficher le modal
+}
+document.getElementById('closeAlertBtn').addEventListener('click', function() {
+    const customAlert = document.getElementById('customAlert');
+    customAlert.style.display = 'none'; });// Cacher le modal
 
-        // Fonction pour fermer la modale
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        closeModalBtn.addEventListener('click', function() {
-            const gameRulesModal = document.getElementById('gameRulesModal');
-            gameRulesModal.style.display = 'none';
-        });
+// Fonction pour fermer la modale des règles
+const closeModalBtn = document.getElementById('closeModalBtn');
+closeModalBtn.addEventListener('click', function() {
+    const gameRulesModal = document.getElementById('gameRulesModal');
+    gameRulesModal.style.display = 'none';
+});
 
-        // Fonction pour rediriger vers une autre page 
-        const okBtn = document.getElementById('okBtn');
-        okBtn.addEventListener('click', function() {
-            
-            window.location.href = 'animation.html'; 
-        });
+// Fonction pour rediriger vers une autre page lorsque l'utilisateur clique sur OK
+const okBtn = document.getElementById('okBtn');
+okBtn.addEventListener('click', function() {
+    window.location.href = 'animation.html'; // Changer cette URL selon ta structure
+});
+
+
+// Fonction pour vérifier que tous les champs sont remplis avant d'afficher la modale
+document.getElementById('startGameBtn').addEventListener('click', function(e) {
+    e.preventDefault(); // Empêcher le formulaire de se soumettre (si c'est un formulaire HTML classique)
+
+    // Récupérer les champs de formulaire
+    const player1 = document.getElementById('player1').value;
+    const player2 = document.getElementById('player2') ? document.getElementById('player2').value : null;
+    const numPlayers = document.getElementById('numPlayers').value;
+    const difficulty = document.getElementById('difficulty').value;
+
+    // Vérifier si les champs obligatoires sont remplis
+    if (numPlayers == '1' && player1 !== "" && difficulty !== "") {
+        showGameRules(); // Afficher la modale des règles
+    } else if (numPlayers == '2' && player1 !== "" && player2 !== "" && difficulty !== "") {
+        showGameRules(); // Afficher la modale des règles
+    } else {
+        showCustomAlert("Veuillez remplir tous les champs !"); // Afficher l'alerte personnalisée
+    }
+});
+
 </script>
 
 </body>
