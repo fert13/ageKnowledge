@@ -1171,6 +1171,15 @@ input {
 /* For mobile devices (up to 480px) */
 @media only screen and (max-width: 700px) {
 
+    .progress-container {
+        width: 80%;
+        max-width: 150px;
+        height: 10px;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
     .container {
         display: flex;
         flex-direction: column;
@@ -1190,6 +1199,11 @@ input {
         width: 100%;
         height: auto;
         gap: 0;
+    }
+
+    .logo {
+        width: 150px;
+        height: auto;
     }
 
     #sidebar {
@@ -1228,10 +1242,20 @@ input {
         font-size: 12px;
     }
 
+    .box, .box2, .box3{
+        width: 500px;
+        margin: 10px;
+    }
+
 }
 
 /* For larger tablets (up to 1024px) */
 @media (min-width: 700px) and (max-width: 1120px) {
+
+    .box, .box2, .box3{
+        width: 500px;
+        margin: 10px;
+    }
 
     .container {
         display: flex;
@@ -1296,6 +1320,10 @@ input {
         height: 120px;
         position: relative;
         transform: rotate(-10deg);
+    }
+
+    .notification {
+        font-size: 12px;
     }
 
 }
