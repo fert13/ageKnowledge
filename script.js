@@ -450,7 +450,7 @@ const teamAnswer = (selectedOption, teamColor) => {
         }else {
             rollDiceButton.disabled = true;
             localStorage.setItem(`${team.boardColor}Answer`, false);
-            showNotification(`Mauvaise réponse ${localStorage.getItem('player2') === 'Bot' ? 'du Bot' : " "}`, "error");
+            showNotification(`Mauvaise réponse ${localStorage.getItem('player2') === 'Bot' && teamColor !=='blue' ? "du Bot" : " "}`, "error");
             setTimeout(() => {
                 nextTeamTurn()
             }, 2000);
