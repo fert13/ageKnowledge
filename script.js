@@ -443,13 +443,14 @@ const teamAnswer = (selectedOption, teamColor) => {
             setTimeout(() => {
                 showNotification("Lancer le dé ", "success");
             }, 1000);
-            // if(teamColor !== 'blue' && localStorage.getItem('gameMode') === 'Bot'){
-            //     rollDiceButtonForBot()
-            // }
+            if(teamColor !== 'blue' && localStorage.getItem('gameMode') === 'bot'){
+                console.log('je suis la')
+                rollDiceButtonForBot()
+            }
         }else {
             rollDiceButton.disabled = true;
             localStorage.setItem(`${team.boardColor}Answer`, false);
-            showNotification("Mauvaise réponse ", "error");
+            showNotification(`Mauvaise réponse ${localStorage.getItem('player2') === 'Bot' ? 'du Bot' : " "}`, "error");
             setTimeout(() => {
                 nextTeamTurn()
             }, 2000);
@@ -482,11 +483,11 @@ const nextTeamTurn = async () => {
     rollDiceButton.disabled = true
     loadQuestion()
 
-    // if (playerTurns[currentPlayerTurnIndex] !== 'blue') {
-    //     setTimeout(()=>{
-    //         botAnswer(playerTurns[currentPlayerTurnIndex]);
-    //     }, 1000)
-    // } 
+    if (playerTurns[currentPlayerTurnIndex] !== 'blue' && localStorage.getItem('gameMode') ==='bot' ) {
+        setTimeout(()=>{
+            botAnswer(playerTurns[currentPlayerTurnIndex]);
+        }, 1000)
+    } 
 }
 
 // Gestion de l'empilement des cartes 
@@ -598,9 +599,8 @@ const showDangerBonusCard = (bonus, piece) => {
         'b9': '♣'  
     };
 
-    console.log("dss", symbols[piece]);
 
-    if (symbols[piece] && bonus >= 5 && bonus <= 10) {
+    if (symbols[piece] && bonus) {
         addShuffleEffect();
         setTimeout(() => {
             moveCard(document.querySelector('.belotte-card:first-child'));
@@ -625,7 +625,7 @@ const showDangerBonusCard = (bonus, piece) => {
 };
 
 
-showDangerBonusCard(7, 'y9');
+// showDangerBonusCard(7, 'y9');
 
 // Fonction pour déterminer les pas de la piece du jour sur le bord
 const giveArrayForMovingPath = (piece) => {
@@ -1057,7 +1057,7 @@ const turnForUserAll = async (e) => {
 // Déplacement des pions des joueurs actifs
 const turnForUser = async (e) => {
 
-    let isUserTurn = playerTurns[currentPlayerTurnIndex] ;
+    let isUserTurn = playerTurns[currentPlayerTurnIndex] = 'blue' ;
     let currentTeamTurn = playerTurns[currentPlayerTurnIndex];
 
     //Return user if user has used it chance or the current turn is not for user
@@ -1155,7 +1155,6 @@ const rollDiceButtonForBot = () => {
 
     setTimeout(async () => {
         rollDice.src = `./Assets/Dice_${diceResult}.png`;
-
         await delay(700);
         rollDiceButton.disabled = false;
         turnForBot();
