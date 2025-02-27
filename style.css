@@ -1187,7 +1187,7 @@ input {
     }
 
     .card, .symbolCard {
-        width: 600px;
+        width: 100%;
         height: auto;
         gap: 0;
     }
