@@ -1171,6 +1171,12 @@ input {
 /* For mobile devices (up to 480px) */
 @media only screen and (max-width: 700px) {
 
+    .box img.top-left, 
+    .box img.bottom-right, .box2 img.top-left, 
+    .box2 img.bottom-right {
+        display: none;
+    }
+
     .progress-container {
         width: 80%;
         max-width: 150px;
@@ -1243,9 +1249,32 @@ input {
     }
 
     .box, .box2, .box3{
-        width: 500px;
-        margin: 10px;
+        width: 400px;
     }
+
+    .animated-text {
+        text-align: center;
+        font-size: 50px;
+    }
+
+    #homePage h1 {
+        font-size: 50px;
+    }
+
+    .cube {
+        width: 80px;
+        top: 120px
+    }
+
+    #typingText {
+        font-size: 15px;
+    }
+
+    .akg {
+        width: 400px;
+        height: 150px;
+    }
+
 
 }
 
@@ -1255,6 +1284,10 @@ input {
     .box, .box2, .box3{
         width: 500px;
         margin: 10px;
+    }
+
+    .akg {
+        width: 400px;
     }
 
     .container {
