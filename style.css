@@ -444,7 +444,6 @@ canvas{
     background: white;
     color:#42210b;
     text-align: center;
-    max-width: 300px;
     border-width: 20px;
     border-style: solid;
     border-image: url('Assets/image2.png') 30 stretch; /* Bordure avec l'image */
@@ -461,8 +460,6 @@ canvas{
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    flex-wrap: wrap;
-     /* Fond chocolat */
     padding: 10px;
 }
 
@@ -1172,9 +1169,32 @@ input {
 
 
 /* For mobile devices (up to 480px) */
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 700px) {
+
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .options {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .options button {
+        width: auto;
+        flex-wrap: nowrap;
+    }
+
+    .card, .symbolCard {
+        width: 600px;
+        height: auto;
+        gap: 0;
+    }
+
     #sidebar {
-        display: none;
+        width: 100%;
+
     }
 
     .navbar-left p {
@@ -1187,12 +1207,16 @@ input {
         justify-content: center;
         align-items: center;
         gap: 20px;
+        padding: 30px;
     }
     .column {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
+        gap: 50px;
+        width: auto;
+        height: auto;
     }
 
     #ludoBoard {
@@ -1200,10 +1224,84 @@ input {
         width: 300px;
     }
 
+    .notification {
+        font-size: 12px;
+    }
+
 }
 
 /* For larger tablets (up to 1024px) */
-@media only screen and (max-width: 1050px) {
+@media (min-width: 700px) and (max-width: 1120px) {
+
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .options {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .options button {
+        width: auto;
+        flex-wrap: nowrap;
+    }
+
+    .card, .symbolCard {
+        width: 100%;
+        height: auto;
+        gap: 0;
+    }
+
+    #sidebar {
+        width: 100%;
+
+    }
+
+    .navbar-left p {
+        display: none;
+    }
+
+    .ludoContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    #ludoBoard {
+        height: 400px;
+        width: 400px;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+        width: auto;
+        height: auto;
+    }
+
+    .belotte-card {
+        width: 80px;
+        height: 120px;
+    }
+
+    .right-zone {
+        width: 100px;
+        height: 120px;
+        position: relative;
+        transform: rotate(-10deg);
+    }
+
+}
+
+/* For larger tablets (up to 1024px) */
+/* @media only screen and (max-width: 1120px) {
     #sidebar {
         display: none;
     }
@@ -1247,5 +1345,5 @@ input {
         transform: rotate(-10deg);
     }
 
-}
+} */
 
