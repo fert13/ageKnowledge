@@ -617,7 +617,7 @@ const showDangerBonusCard = (bonus, piece) => {
                     bonusText.style.display ='none';
                     document.getElementById('card').style.display = 'flex';
                     nextTeamTurn();
-                }, 3000);
+                }, 5000);
 
             }, 1500);
         }, 2000);
@@ -625,7 +625,7 @@ const showDangerBonusCard = (bonus, piece) => {
 };
 
 
-showDangerBonusCard(9, 'y9');
+showDangerBonusCard(7, 'y9');
 
 // Fonction pour déterminer les pas de la piece du jour sur le bord
 const giveArrayForMovingPath = (piece) => {
@@ -1191,7 +1191,36 @@ document.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
         rollDiceButton.click();
     }
-})
+});
+
+document.getElementById('hamburgerMenu').addEventListener("click", () => {
+    const settingsSidebar = document.getElementById("settingsSidebar");
+    const closeSidebarBtn = document.getElementById("closeSidebar");
+    const settingsContent = document.getElementById("settingsContent");
+
+    // Fonction pour récupérer les données du localStorage
+    const loadSettings = () => {
+        settingsContent.innerHTML = ""; // Vider le contenu actuel
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key);
+            const settingItem = document.createElement("p");
+            settingItem.textContent = `${key}: ${value}`;
+            settingsContent.appendChild(settingItem);
+        }
+    };
+
+    // Ouvrir la sidebar
+        settingsSidebar.style.display = "flex";
+        loadSettings(); 
+
+
+    // Fermer la sidebar
+    closeSidebarBtn.addEventListener("click", () => {
+        settingsSidebar.style.display = "none";
+    });
+});
+
 
 
 
