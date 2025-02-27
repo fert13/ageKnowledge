@@ -444,8 +444,10 @@ const teamAnswer = (selectedOption, teamColor) => {
                 showNotification("Lancer le dé ", "success");
             }, 1000);
             if(teamColor !== 'blue' && localStorage.getItem('gameMode') === 'bot'){
-                console.log('je suis la')
-                rollDiceButtonForBot()
+                console.log('je suis la');
+                setTimeout(() => {
+                    rollDiceButtonForBot()
+                }, 1000);
             }
         }else {
             rollDiceButton.disabled = true;
