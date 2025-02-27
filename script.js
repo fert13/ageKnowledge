@@ -163,6 +163,13 @@ if (numPvP === 2) {
     playerTurns = ['blue', 'red', 'green', 'yellow']
 }
 
+//Si le premier joueur n'existe pas, donc il n'y a pas eu de configuration d'ou retour à la page de configuration
+if(!localStorage.getItem('player1')){
+    window.location = 'configuration.html'
+}
+
+
+//Affichage des noms des joueurs en compétition
 
 if(localStorage.getItem('gameMode')==='manette'){
     document.getElementById('joueurs-name').innerHTML=`<p>${localStorage.getItem('player1')} vs ${localStorage.getItem('player2')}`
@@ -172,10 +179,7 @@ if(localStorage.getItem('gameMode')==='manette'){
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-if(!localStorage.getItem('player1')){
-    window.location = 'configuration.html'
-}
-
+// Les questions difficiles 
 const difficultQuestions = [
     {
       question: "Qui a inventé la machine à vapeur ?",
@@ -279,6 +283,7 @@ const difficultQuestions = [
     }
   ];
   
+// Les questions faciles
 const easyQuestions = [
     {
         question: "Comment Andrew Carnegie a-t-il influencé l'industrie américaine ?",
@@ -347,12 +352,14 @@ const easyQuestions = [
       }
 ];
 
+// Gestion de l'affichage des cartes en fonction type de niveau choisi
 if(localStorage.getItem('gameLevel') === '2'){
     questions = difficultQuestions;
 } else {
     questions = easyQuestions;
 }
 
+// Gestion de la notification
 const showNotification =(message,type) => {
     const notification = document.getElementById('notification');
     const icon = document.getElementById('notificationIcon');
@@ -387,7 +394,7 @@ document.getElementById('closeNotification').addEventListener('click', () => {
 });
 
 
-
+// Gestion de l'affichage des questions
 function loadQuestion () {
     const questionElement = document.getElementById("question");
     const optionsElement = document.getElementById("options");
@@ -407,6 +414,7 @@ function loadQuestion () {
 
 }
 
+// Gestion du tour des joueurs
 const setPlayerTurn = (playerTurnIndex) => {
     if (playerTurnIndex == null || playerTurnIndex === undefined) {
         return
@@ -424,6 +432,7 @@ const setPlayerTurn = (playerTurnIndex) => {
 setPlayerTurn(0);
 
 
+// Gestion de la réponse à une question
 const teamAnswer = (selectedOption, teamColor) => {
     let team = boardDetails.find(team => team.boardColor === teamColor);
     if (team) {
@@ -448,7 +457,7 @@ const teamAnswer = (selectedOption, teamColor) => {
     } 
 }
 
-
+// Gestion de la réponse à unne question par un bot
 function botAnswer(teamColor) {
     const currentQuestion = questions[currentIndex];
     const randomOption = currentQuestion.options[Math.floor(Math.random() * currentQuestion.options.length)];
@@ -456,7 +465,7 @@ function botAnswer(teamColor) {
 }
 
 
-
+// Gestion du tour 
 const nextTeamTurn = async () => {
     prevPlayerTurnIndex = currentPlayerTurnIndex;
 
@@ -466,7 +475,6 @@ const nextTeamTurn = async () => {
         currentPlayerTurnIndex += 1;
     }
 
-    //Here the setPlayerTurn is called twice to remove the active class from the last board and add to the new team baord
     setPlayerTurn(prevPlayerTurnIndex);
     setPlayerTurn(currentPlayerTurnIndex)
     await delay(500);
@@ -481,24 +489,23 @@ const nextTeamTurn = async () => {
     // } 
 }
 
-// empilement des cartes 
-
+// Gestion de l'empilement des cartes 
 function getRandomCard() {
     const number = numbers[Math.floor(Math.random() * numbers.length)];
     const symbol = symbols[Math.floor(Math.random() * symbols.length)];
     return `${number} ${symbol}`;
 }
 
+// Gestion de l'affichage des 16 cartes symboles
 function cardBelotteCreate() {
     const card = document.createElement("div");
     card.classList.add("belotte-card");
     card.textContent = getRandomCard();
-    card.onclick = function () { moveCard(this); };
     document.querySelector(".right-zone").appendChild(card);
     addShuffleEffect();
 }
 
-
+// Gestion effets sur les cartes
 function addShuffleEffect() {
     const cards = document.querySelectorAll(".belotte-card");
     cards.forEach(card => {
@@ -507,11 +514,32 @@ function addShuffleEffect() {
     });
 }
 
+function moveCard(card) {
+    const leftZone = document.querySelector("#card-container");
+    const rightZone = document.querySelector(".right-zone");
+
+    const clone = card.cloneNode(true);
+    document.getElementById('card-container').appendChild(clone);
+    clone.classList.add("moving");
+
+    setTimeout(() => {
+        leftZone.removeChild(clone);
+    }, 1000);
+
+    setTimeout(() => {
+        rightZone.removeChild(card);
+    }, 1200);
+}
+
+// Ajout des 16 Cartes symboles empillés
 for (let i = 0; i < 15; i++) {
     cardBelotteCreate();
 }
 
+
+// Création de cartes en fonction des symboles
 function createCard(value, symbol) {
+    console.log("valeur:", value, "symbol", symbol)
     const symbols = { 1: "A", 11: "J", 12: "Q", 13: "K" };
     const cardValue = symbols[value] || value;
 
@@ -535,10 +563,32 @@ function createCard(value, symbol) {
     card.appendChild(bottomRight);
 
     const container = document.getElementById("card-container");
-    container.innerHTML = ""; 
     container.appendChild(card);
 }
 
+// Gestion de l'affichage des carte bonus
+// const showDangerBonusCard = (bonus, piece) => {
+//     const symbols = {
+//         'r9': '☠',
+//         'y9': '♦', 
+//         'g9': '♥',
+//         'b9': '♣'  
+//     };
+
+//     console.log("dss", symbols[piece])
+
+//     if (symbols[piece] && bonus >= 5 && bonus <= 10) {
+//         addShuffleEffect()
+         
+//         setTimeout(()=>{
+//             moveCard(document.querySelector('.belotte-card:first-child'));
+//             setTimeout(()=> { createCard(bonus, symbols[piece])}, 1500)
+//             document.getElementById('card').style.display = 'none';
+//             document.getElementById('card-container').style.display = 'flex';
+
+//         }, 2000 )
+//     }
+// };
 
 const showDangerBonusCard = (bonus, piece) => {
     const symbols = {
@@ -548,21 +598,34 @@ const showDangerBonusCard = (bonus, piece) => {
         'b9': '♣'  
     };
 
-    if (symbols[piece] && bonus >= 5 && bonus <= 10) {
-        addShuffleEffect()
-        setTimeout(()=>{
-            createCard(bonus, symbols[piece]);
-            console.log(bonus)
-            document.getElementById('card').style.display = 'none';
-            document.getElementById('card-container').style.display = 'block';
+    console.log("dss", symbols[piece]);
 
-        }, 3000 )
-        document.getElementById('card').style.display = 'block';
-        document.getElementById('card-container').style.display = 'none';
+    if (symbols[piece] && bonus >= 5 && bonus <= 10) {
+        addShuffleEffect();
+        setTimeout(() => {
+            moveCard(document.querySelector('.belotte-card:first-child'));
+
+            setTimeout(() => { 
+                createCard(bonus, symbols[piece]);
+                document.getElementById('card').style.display = 'none';
+                document.getElementById('card-container').style.display = 'flex';
+
+                setTimeout(() => {
+                    document.getElementById('card-container').style.display = 'none';
+
+                    document.getElementById('card').style.display = 'flex';
+                    nextTeamTurn();
+                }, 3000);
+
+            }, 1500);
+        }, 2000);
     }
 };
 
 
+showDangerBonusCard(9, 'y9');
+
+// Fonction pour déterminer les pas de la piece du jour sur le bord
 const giveArrayForMovingPath = (piece) => {
     let totalSteps = diceResult;
 
@@ -575,7 +638,7 @@ const giveArrayForMovingPath = (piece) => {
                 totalSteps = Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps, piece.position);
             } else {
-                totalSteps = -4; // Reculer de 4 cases
+                totalSteps = -4; 
             }
         },
         'y9': () => { 
@@ -609,7 +672,6 @@ const giveArrayForMovingPath = (piece) => {
 
     return calculateMovingPath(piece, totalSteps);
 };
-
 
 // Fonction pour calculer le déplacement
 const calculateMovingPath = (piece, steps) => {
@@ -693,6 +755,7 @@ const moveElementSequentially = (elementId, array) => {
     !toBreak && moveToNextTarget(0);
 }
 
+// Lancement du dé par le Bot
 const rollMyDice = async (hasBonus) => {
     currentPlayerTurnStatus = true;
     await delay(700);
@@ -704,6 +767,7 @@ const rollMyDice = async (hasBonus) => {
     }
 }
 
+// Déplacement du dé 
 const moveMyPiece = async (piece) => {
     let array = giveArrayForMovingPath(piece);
 
@@ -988,6 +1052,7 @@ const turnForUserAll = async (e) => {
     }
 }
 
+// Déplacement des pions des joueurs actifs
 const turnForUser = async (e) => {
 
     let isUserTurn = playerTurns[currentPlayerTurnIndex] ;
@@ -1051,13 +1116,13 @@ rollDiceGif.src = `./Assets/rollDice.gif`;
 rollDiceButton.addEventListener('click', async () => {
     let currentTeamTurn = playerTurns[currentPlayerTurnIndex];
 
-    if (!currentPlayerTurnStatus) return; //Return if user has used chance
+    if (!currentPlayerTurnStatus) return; 
 
     rollDiceButton.disabled = true;
     rollDice.src = rollDiceGif.src;
     diceResult =  (Math.floor(Math.random() * 6) + 1);
     diceRollAudio.play()
-    currentPlayerTurnStatus = false; //User used its chance
+    currentPlayerTurnStatus = false; 
     teamHasBonus = false;
 
     setTimeout(async () => {
@@ -1077,14 +1142,12 @@ rollDiceButton.addEventListener('click', async () => {
     }, 600);
 })
 
-
+// Lancement du dé par le joueur bot
 const rollDiceButtonForBot = () => {
-    if (!currentPlayerTurnStatus) return; //Return if user has used chance
-
-
+    if (!currentPlayerTurnStatus) return; 
     rollDice.src = rollDiceGif.src;
     diceResult = Math.floor(Math.random() * 6) + 1;
-    currentPlayerTurnStatus = false; //User used its chance
+    currentPlayerTurnStatus = false; 
     teamHasBonus = false;
     diceRollAudio.play();
 

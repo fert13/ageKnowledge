@@ -342,8 +342,9 @@ body {
     padding: 2px 5px;
 }
 
-.option-jeu::selection {
-    background-color: #f9bc74;
+.option-jeu.selected {
+    border: 1px solid #f9bc74; 
+    color: #f9bc74; 
 }
 
 .rollingDice img{
@@ -425,7 +426,7 @@ canvas{
     font-size: 60px
 }
 
-.introductionPage button, .configuration-bouton{
+.introductionPage button, .configuration-button{
     border-radius: 20px;
     padding: 10px 18px;
     background: linear-gradient(to right, #f9bc74 20%, #42210b 100%);
@@ -435,9 +436,11 @@ canvas{
     border: none;
 }
 
-.introductionPage>button:hover, .configuration-bouton{
-    background: linear-gradient(to right, #f9bc74 50%, #42210b 100%);
+.introductionPage button:hover, .configuration-button{
+    background: linear-gradient(to right, #f9bc74 2%, #42210b 100%);
 }
+
+
 
 .card {
     background: white;
@@ -536,18 +539,18 @@ canvas{
 }
 
 .symbolCard {
-    width: 120px;
-    height: 180px;
+    width: 300px;
+    height: 450px;
     background: white;
+    color: black;
     border-radius: 10px;
-    border: 2px solid black;
+    border: none;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 10px;
-    font-family: "Arial", sans-serif;
     position: relative;
 }
 
@@ -571,7 +574,7 @@ canvas{
 }
 
 .center {
-    font-size: 50px;
+    font-size: 100px;
 }
 
 
@@ -904,12 +907,16 @@ button {
 
 input {
     width: 320px;
-    height: 35px;
-    border-radius: 5px;
+    height: 32px;
+    border-radius: 3px;
     border: 1px solid white;
     padding: 10px;
     background: transparent;
     font-size: 1rem;
+    color: white;
+    &:focus {
+        border: none;
+    }
 }
 
 #playerConfig, #playerFields {
@@ -1010,18 +1017,6 @@ input {
     border-radius: 20px;
   }
 
-  #okButton {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-#okButton:hover {
-    background-color: #45a049;
-}
 
 .right-zone {
     width: 100px;
@@ -1072,13 +1067,35 @@ input {
 .belotte-card:nth-child(14) { top: 65px; transform: rotate(45deg); }
 .belotte-card:nth-child(15) { top: 65px; transform: rotate(45deg);  }
 
-.moving {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.2) rotate(360deg);
-    transition: transform 1s ease-in-out, left 1s ease-in-out;
+@keyframes moveLeftToRight {
+    0% {
+        transform: translate(0,0); 
+        opacity: 1;
+    }
+    50% {
+        transform: translate(30vw,20vh); 
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50vw,30vh); 
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-80vw,40vh); 
+        opacity: 0;
+    }
 }
+
+.moving{
+    background-image: url('Assets/point-d-interrogation-or.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: moveLeftToRight 1s ease-out forwards;
+    z-index: 1;
+}
+
+
 
 .shuffle {
     animation: shuffle 0.5s ease-in-out;

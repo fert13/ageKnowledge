@@ -15,7 +15,7 @@
                 <h3>Choix du niveau de jeu <span>*</span></h3>
                 <div class="levels">
                     <img src="Assets/Image1.png" alt="Niveau 1" onclick="selectLevel(1)">
-                    <img src="Assets/Image1.png" alt="Niveau 2" onclick="selectLevel(2)">
+                    <img src="Assets/Image-carte2.png" alt="Niveau 2" onclick="selectLevel(2)">
                 </div>
                 <h3>Choix du type de jeu <span>*</span></h3>
                 <div class="levels">
@@ -25,7 +25,8 @@
             
                 <div id="playerConfig" style="display: none;">
                     <div id="playerFields"></div>
-                    <button class="configuration-bouton" onclick="saveConfig()" >Jouer à AKG</button>
+                    <p class="erreur" id="erreur"></p>
+                    <button class="configuration-button" onclick="saveConfig()" >Jouer à AKG</button>
                 </div>
            </div>
         </div>

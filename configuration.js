@@ -3,14 +3,25 @@ function setGameMode(mode) {
     document.getElementById('playerConfig').style.display = 'flex';
     let playerFields = document.getElementById('playerFields');
     playerFields.innerHTML = ` 
-        <input type="text" id="player1" placeholder="Nom Joueur 1">
+        <input type="text" id="player1" placeholder="Nom du joueur ${mode === 'bot' ? " " : " 1" }">
     `;
     if (mode === 'manette') {
         playerFields.innerHTML += `
-            <input type="text" id="player2" placeholder="Nom Joueur 2">
+            <input type="text" id="player2" placeholder="Nom du joueur 2">
         `;
     } else {
         localStorage.setItem('player2', 'Bot');
+    }
+
+    let buttons = document.querySelectorAll('.option-jeu');
+    buttons.forEach(button => {
+        button.classList.remove('selected'); 
+    });
+
+    if (mode === 'bot') {
+        document.querySelector('.option-jeu:first-child').classList.add('selected');
+    } else {
+        document.querySelector('.option-jeu:last-child').classList.add('selected');
     }
 }
 
@@ -31,7 +42,12 @@ function saveConfig() {
     if((player1 && player1 !== " ") && (player2 && player2 !== " ") && localStorage.getItem('gameLevel')){
         window.location.href = "game.html"
     }else {
-        return 
+        let erreurMessage = document.getElementById('erreur');
+        erreurMessage.innerText = "Tous les champs doivent être remplis";
+        erreurMessage.style.display = "block"; 
+        setTimeout(() => {
+            erreurMessage.style.display = "none"; 
+        }, 1500);
     }
 
 }
