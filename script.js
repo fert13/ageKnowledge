@@ -12,7 +12,7 @@ const yellow_Board = document.getElementById("yellow-Board");
 //DOMs
 const rollDiceButton = document.getElementById('rollDiceButton');
 const rollDice = document.getElementById('rollDice');
-const bonusDisplay = document.getElementById("bonusDisplay");
+const bonusText = document.getElementById('sidebarHeader');
 
 
 //Initial Variables;
@@ -606,13 +606,15 @@ const showDangerBonusCard = (bonus, piece) => {
             moveCard(document.querySelector('.belotte-card:first-child'));
 
             setTimeout(() => { 
+                bonusText.innerText = `+ ${bonus}`;
+                bonusText.classList.add('bonus');
                 createCard(bonus, symbols[piece]);
                 document.getElementById('card').style.display = 'none';
                 document.getElementById('card-container').style.display = 'flex';
 
                 setTimeout(() => {
                     document.getElementById('card-container').style.display = 'none';
-
+                    bonusText.style.display ='none';
                     document.getElementById('card').style.display = 'flex';
                     nextTeamTurn();
                 }, 3000);
