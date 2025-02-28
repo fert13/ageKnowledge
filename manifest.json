@@ -1,0 +1,16 @@
+{
+    "name": "Age of Knowledge",
+    "short_name": "AKG",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#42210b",
+    "theme_color": "#db4938",
+    "orientation": "portrait-primary",
+    "icons": [
+      {
+        "src": "Assets/logo.png",
+        "type": "image/png", "sizes": "72x72"
+      }
+
+    ]
+  }
