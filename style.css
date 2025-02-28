@@ -1309,7 +1309,7 @@ input {
 
 
 /* For mobile devices (up to 480px) */
-@media only screen and (max-width: 700px) {
+@media (min-width: 480px) and (max-width: 700px) {
 
     .box img.top-left, 
     .box img.bottom-right, .box2 img.top-left, 
@@ -1501,10 +1501,53 @@ input {
 
 }
 
-/* For larger tablets (up to 1024px) */
-/* @media only screen and (max-width: 1120px) {
-    #sidebar {
+
+@media only screen and (max-width: 480px) {
+
+    .box img.top-left, 
+    .box img.bottom-right, .box2 img.top-left, 
+    .box2 img.bottom-right {
         display: none;
+    }
+
+    .progress-container {
+        width: 80%;
+        max-width: 150px;
+        height: 10px;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .options {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .options button {
+        width: auto;
+        flex-wrap: nowrap;
+    }
+
+    .card, .symbolCard {
+        width: 100%;
+        height: auto;
+        gap: 0;
+    }
+
+    .logo {
+        width: 150px;
+        height: auto;
+    }
+
+    #sidebar {
+        width: 100%;
+
     }
 
     .navbar-left p {
@@ -1517,13 +1560,8 @@ input {
         justify-content: center;
         align-items: center;
         gap: 20px;
+        padding: 30px;
     }
-
-    #ludoBoard {
-        height: 300px;
-        width: 300px;
-    }
-
     .column {
         display: flex;
         flex-direction: row;
@@ -1534,17 +1572,41 @@ input {
         height: auto;
     }
 
-    .belotte-card {
+    #ludoBoard {
+        height: 300px;
+        width: 300px;
+    }
+
+    .notification {
+        font-size: 12px;
+    }
+
+    .box, .box2, .box3{
+        width: 350px;
+    }
+
+    .animated-text {
+        text-align: center;
+        font-size: 50px;
+    }
+
+    #homePage h1 {
+        font-size: 50px;
+    }
+
+    .cube {
         width: 80px;
-        height: 120px;
+        top: 120px
     }
 
-    .right-zone {
-        width: 100px;
-        height: 120px;
-        position: relative;
-        transform: rotate(-10deg);
+    #typingText {
+        font-size: 15px;
     }
 
-} */
+    .akg {
+        width: 400px;
+        height: 150px;
+    }
+
+}
 
