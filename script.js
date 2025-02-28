@@ -415,21 +415,49 @@ function loadQuestion () {
 }
 
 // Gestion du tour des joueurs
-const setPlayerTurn = (playerTurnIndex) => {
+// const setPlayerTurn = (playerTurnIndex) => {
+//     if (playerTurnIndex == null || playerTurnIndex === undefined) {
+//         return
+//     }
+//     let currentTeamTurn = playerTurns[playerTurnIndex];
+//     //Filtering the board details array and finding the currentTeamTurn object
+//     let boardDetailObject = boardDetails.filter(obj => obj.boardColor === currentTeamTurn);
+//     const utterance = new SpeechSynthesisUtterance(`C'est au tour de ${boardDetailObject[0].player} de jouer.`);
+//     utterance.lang = 'fr-FR'; 
+//     boardDetailObject[0].board.classList.toggle('active');
+//     setTimeout(
+//         () => {
+//             speechSynthesis.speak(utterance);
+//             showNotification(`Tour du joueur ${boardDetailObject[0].player} de répondre à une question !  `, "info")
+//         },        
+//         1500
+//     )
+//     loadQuestion()
+// }
+
+const setPlayerTurn = (playerTurnIndex, isActive) => {
     if (playerTurnIndex == null || playerTurnIndex === undefined) {
-        return
+        return;
     }
+
     let currentTeamTurn = playerTurns[playerTurnIndex];
-    //Filtering the board details array and finding the currentTeamTurn object
-    let boardDetailObject = boardDetails.filter(obj => obj.boardColor === currentTeamTurn);
-    boardDetailObject[0].board.classList.toggle('active');
-    setTimeout(    
-        showNotification(`Tour du joueur ${boardDetailObject[0].player} de répondre à une question !  `, "info"),
-        1500
-    )
+    let boardDetailObject = boardDetails.find(obj => obj.boardColor === currentTeamTurn);
+
+    if (isActive) {
+        boardDetailObject.board.classList.add('active');
+
+        const utterance = new SpeechSynthesisUtterance(`C'est au tour de ${boardDetailObject.player} de jouer.`);
+        utterance.lang = 'fr-FR';
+        speechSynthesis.speak(utterance);
+
+        showNotification(`Tour du joueur ${boardDetailObject.player} de répondre à une question !`, "info");
+    } else {
+        boardDetailObject.board.classList.remove('active');
+    }
     loadQuestion()
-}
-setPlayerTurn(0);
+};
+
+setPlayerTurn(0, true);
 
 
 // Gestion de la réponse à une question
@@ -441,10 +469,12 @@ const teamAnswer = (selectedOption, teamColor) => {
             showNotification("Bonne réponse ", "success");
             rollDiceButton.disabled = false;
             setTimeout(() => {
+                let reponse = new SpeechSynthesisUtterance("Bonne réponse, lancer le dé !")
+                reponse.lang = 'fr-FR';
+                speechSynthesis.speak(reponse);
                 showNotification("Lancer le dé ", "success");
             }, 1000);
             if(teamColor !== 'blue' && localStorage.getItem('gameMode') === 'bot'){
-                console.log('je suis la');
                 setTimeout(() => {
                     rollDiceButtonForBot()
                 }, 1000);
@@ -478,8 +508,8 @@ const nextTeamTurn = async () => {
         currentPlayerTurnIndex += 1;
     }
 
-    setPlayerTurn(prevPlayerTurnIndex);
-    setPlayerTurn(currentPlayerTurnIndex)
+    setPlayerTurn(prevPlayerTurnIndex, false);
+    setPlayerTurn(currentPlayerTurnIndex, true)
     await delay(500);
     currentIndex = (currentIndex + 1) % questions.length;
     rollDiceButton.disabled = true
