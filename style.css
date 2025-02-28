@@ -1420,6 +1420,9 @@ input {
 
 /* For larger tablets (up to 1024px) */
 @media (min-width: 700px) and (max-width: 1120px) {
+    .animated-text {
+        text-align: center;
+    }
 
     .box, .box2, .box3{
         width: 500px;
