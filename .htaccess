@@ -1,0 +1,8 @@
+# Activer la réécriture d'URL
+RewriteEngine On
+
+# Supprimer l'affichage de .html dans la barre d'adresse
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html\s [NC]
+RewriteRule ^(.+)\.html$ /$1 [R=301,L]
+
+ErrorDocument 404 /404.html
