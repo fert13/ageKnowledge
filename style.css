@@ -1586,6 +1586,8 @@ input {
 
     .box, .box2, .box3{
         width: 320px;
+        justify-content: center;
+        align-items: center;
     }
 
     .animated-text {
@@ -1609,6 +1611,20 @@ input {
     .akg {
         width: 400px;
         height: 150px;
+    }
+
+    .levels img {
+        width: 120px;
+    }
+
+    .option-jeu {
+        font-size: 13px;
+    }
+
+    input {
+        width: 268px;
+        height: 25px;
+        font-size: 13px;
     }
 
 }
