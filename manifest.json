@@ -6,9 +6,10 @@
     "background_color": "#42210b",
     "theme_color": "#db4938",
     "orientation": "portrait-primary",
+    "form_factor": "wide",
     "icons": [
       {
-        "src": "Assets/logo.png",
+        "src": "Assets/72X72.png",
         "type": "image/png", "sizes": "72x72"
       }
 

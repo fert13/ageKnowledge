@@ -14,6 +14,7 @@ const assets = [
   "Assets/sfx/pieceMove.wav",
   "Assets/sfx/win.wav",
   "Assets/dameOpacité.png",
+  "Assets/72X72.png",
   "Assets/dé.png",
   "Assets/Dice_1.png",
   "Assets/Dice_2.png",
@@ -38,4 +39,12 @@ self.addEventListener("install", installEvent => {
       cache.addAll(assets)
     })
   )
-})
+});
+
+self.addEventListener("fetch", fetchEvent => {
+    fetchEvent.respondWith(
+      caches.match(fetchEvent.request).then(res => {
+        return res || fetch(fetchEvent.request)
+      })
+    )
+  })
