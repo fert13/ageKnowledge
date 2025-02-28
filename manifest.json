@@ -6,7 +6,21 @@
     "background_color": "#42210b",
     "theme_color": "#db4938",
     "orientation": "portrait-primary",
-    "form_factor": "wide",
+    "screenshots": [
+  {
+    "src": "Assets/image1.png",
+    "sizes": "280x281",
+    "type": "image/png",
+    "form_factor": "wide"
+  },
+  {
+    "src": "Assets/image-carte2.png",
+    "sizes": "280x280",
+    "type": "image/png",
+    "form_factor": "phone"
+  }
+],
+
     "icons": [
       {
         "src": "Assets/72X72.png",
