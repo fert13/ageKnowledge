@@ -15,6 +15,8 @@ const assets = [
   "Assets/sfx/win.wav",
   "Assets/dameOpacité.png",
   "Assets/72X72.png",
+  "Assets/256x256.png",
+  "Assets/512x512.png",
   "Assets/dé.png",
   "Assets/Dice_1.png",
   "Assets/Dice_2.png",
@@ -42,9 +44,29 @@ self.addEventListener("install", installEvent => {
 });
 
 self.addEventListener("fetch", fetchEvent => {
-    fetchEvent.respondWith(
-      caches.match(fetchEvent.request).then(res => {
-        return res || fetch(fetchEvent.request)
+  fetchEvent.respondWith(
+    caches.match(fetchEvent.request).then(res => {
+      if (res) return res; // Si le cache est trouvé, renvoie-le
+      return fetch(fetchEvent.request).catch(() => {
+        // Retourne une page de secours si l'utilisateur est hors ligne
+        return caches.match("/offline.html");
       })
-    )
-  })
+    })
+  );
+});
+
+// Activation du service worker et mise à jour du cache
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [staticAKG]; // Nouveau nom de cache
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (!cacheWhitelist.includes(cacheName)) {
+            return caches.delete(cacheName); 
+          }
+        })
+      );
+    })
+  );
+});

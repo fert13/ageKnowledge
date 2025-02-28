@@ -1,31 +1,41 @@
 {
     "name": "Age of Knowledge",
     "short_name": "AKG",
-    "start_url": "index.html",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#42210b",
     "theme_color": "#db4938",
     "orientation": "portrait-primary",
     "screenshots": [
-  {
-    "src": "Assets/image1.png",
-    "sizes": "280x281",
-    "type": "image/png",
-    "form_factor": "wide"
-  },
-  {
-    "src": "Assets/image-carte2.png",
-    "sizes": "280x280",
-    "type": "image/png",
-    "form_factor": "phone"
-  }
-],
-
+      {
+        "src": "Assets/image1.png",
+        "sizes": "280x281",
+        "type": "image/png",
+        "form_factor": "wide"
+      },
+      {
+        "src": "Assets/image-carte2.png",
+        "sizes": "280x280",
+        "type": "image/png",
+        "form_factor": "phone"
+      }
+    ],
     "icons": [
       {
         "src": "Assets/72X72.png",
-        "type": "image/png", "sizes": "72x72"
+        "sizes": "72x72",
+        "type": "image/png"
+      },
+      {
+        "src": "Assets/250x250.png",
+        "sizes": "256x256",
+        "type": "image/png"
+      },
+      {
+        "src": "Assets/512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
       }
-
     ]
   }
+  
