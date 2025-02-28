@@ -153,10 +153,23 @@
                 <div class="column">
                     <div class="right-zone" id="right-zone"></div>
                     <div id="settingsSidebar" class="sidebar-hamburger">
-                        <h2>Paramètres</h2>
+                        <div class="sidebar-header">
+                            <h2>Configuration du jeu</h2>
+                            <i id="closeSidebar" class="fa-solid fa-xmark close-icon fa-lg"></i>
+                        </div>
                         <div id="settingsContent"></div>
-                        <button id="closeSidebar">Fermer</button>
+                        <button id="suspendGameBtn" class="suspend-btn">Suspendre la partie</button>
                     </div>
+                    <div id="suspendModal" class="modal-overlay">
+                        <div class="modal-content">
+                            <h3>Voulez-vous vraiment suspendre la partie ?</h3>
+                            <div class="modal-actions">
+                                <button id="confirmSuspend" class="confirm-btn">Confirmer</button>
+                                <button id="cancelSuspend" class="cancel-btn">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="rollingDice">
                         <img src="./Assets/Dice_1.png" alt="Roll_Dice"  id="rollDice">
                         <button id="rollDiceButton">Lancer</button>

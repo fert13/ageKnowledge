@@ -616,7 +616,6 @@ const showDangerBonusCard = (bonus, piece) => {
 
                 setTimeout(() => {
                     document.getElementById('card-container').style.display = 'none';
-                    bonusText.style.display ='none';
                     document.getElementById('card').style.display = 'flex';
                     nextTeamTurn();
                 }, 5000);
@@ -1194,35 +1193,105 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// document.getElementById('hamburgerMenu').addEventListener("click", () => {
+//     const settingsSidebar = document.getElementById("settingsSidebar");
+//     const closeSidebarBtn = document.getElementById("closeSidebar");
+//     const settingsContent = document.getElementById("settingsContent");
+
+//     // Fonction pour récupérer les données du localStorage
+//     const loadSettings = () => {
+//         settingsContent.innerHTML = ""; // Vider le contenu actuel
+//         for (let i = 0; i < localStorage.length; i++) {
+//             const key = localStorage.key(i);
+//             const value = localStorage.getItem(key);
+//             const settingItem = document.createElement("p");
+//             settingItem.textContent = `${key}: ${value}`;
+//             settingsContent.appendChild(settingItem);
+//         }
+//     };
+
+//     // Ouvrir la sidebar
+//         settingsSidebar.style.display = "flex";
+//         loadSettings(); 
+
+
+//     // Fermer la sidebar
+//     closeSidebarBtn.addEventListener("click", () => {
+//         settingsSidebar.style.display = "none";
+//     });
+// });
+
 document.getElementById('hamburgerMenu').addEventListener("click", () => {
     const settingsSidebar = document.getElementById("settingsSidebar");
     const closeSidebarBtn = document.getElementById("closeSidebar");
     const settingsContent = document.getElementById("settingsContent");
 
-    // Fonction pour récupérer les données du localStorage
     const loadSettings = () => {
-        settingsContent.innerHTML = ""; // Vider le contenu actuel
+        settingsContent.innerHTML = ""; 
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
             const value = localStorage.getItem(key);
-            const settingItem = document.createElement("p");
-            settingItem.textContent = `${key}: ${value}`;
-            settingsContent.appendChild(settingItem);
+
+            const settingItem = document.createElement("div");
+            settingItem.classList.add("setting-item");
+
+            const settingKey = document.createElement("p");
+            settingKey.classList.add("setting-key");
+            settingKey.textContent = key;
+
+            const settingValue = document.createElement("p");
+            settingValue.classList.add("setting-value");
+            settingValue.textContent = value;
+
+            if(key ==="gameMode" || key === "gameLevel" || key === "player1" || key === "player2") {
+                settingItem.appendChild(settingKey);
+                settingItem.appendChild(settingValue);
+                settingsContent.appendChild(settingItem);
+
+                if(key ==="gameMode") {
+                    settingKey.textContent = "Mode du jeu"
+                }
+
+                if(key ==="gameLevel") {
+                    settingKey.textContent = "Niveau"
+                }
+
+                if(key ==="player1") {
+                    settingKey.textContent = "Joueur 1"
+                }
+
+                if(key ==="player2") {
+                    settingKey.textContent = "Joueur 2"
+                }
+    
+            }
         }
     };
-
-    // Ouvrir la sidebar
-        settingsSidebar.style.display = "flex";
-        loadSettings(); 
-
-
-    // Fermer la sidebar
+    settingsSidebar.classList.add("open");
+    loadSettings();
     closeSidebarBtn.addEventListener("click", () => {
-        settingsSidebar.style.display = "none";
+        settingsSidebar.classList.remove("open");
     });
 });
 
+document.getElementById("suspendGameBtn").addEventListener("click", () => {
+    
 
+    const suspendModal = document.getElementById("suspendModal");
+    const confirmSuspend = document.getElementById("confirmSuspend");
+    const cancelSuspend = document.getElementById("cancelSuspend");
+
+    suspendModal.style.display = "flex";
+
+    confirmSuspend.addEventListener("click", () => {
+        suspendModal.style.display = "none";
+        setTimeout(()=> window.location = "index.html", 1500);
+    });
+
+    cancelSuspend.addEventListener("click", () => {
+        suspendModal.style.display = "none";
+    });
+});
 
 
 const declareWinner = (team) => {
