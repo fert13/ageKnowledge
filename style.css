@@ -188,8 +188,6 @@ body {
     -webkit-text-stroke-color: rgb(255, 255, 255);
     z-index: 100;
     animation: animateMyI .08s linear;
-    
-    /* Ombre pour effet 3D */
     text-shadow: 2px 2px 0px #ccc, 
                  4px 4px 0px #aaa, 
                  6px 6px 5px rgba(0, 0, 0, 0.4);
@@ -909,6 +907,7 @@ input {
     background: transparent;
     font-size: 1rem;
     color: white;
+    text-transform: capitalize;
     &:focus {
         border: none;
     }
@@ -1054,7 +1053,7 @@ input {
     right: 0;
     width: 300px;
     height: 100%;
-    background-color:#6e2e04ce;
+    background-color:rgb(5, 21, 65, 0.5);
     padding: 20px;
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.5);
     transition: right 0.3s ease-in-out;
@@ -1188,43 +1187,6 @@ input {
 }
 
 
-/* .sidebar-hamburger {
-    display: none;
-    position: fixed;
-    top: 0;
-    right: 0; 
-    width: 300px;
-    height: 100%;
-    background: #f9bc74;
-    padding: 20px;
-    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.5);
-    transition: right 0.3s ease-in-out;
-    z-index: 1000;
-    flex-direction: column;
-}
-
-.sidebar h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#settingsContent {
-    max-height: 80%;
-    overflow-y: auto;
-}
-
-#closeSidebar {
-    width: 100%;
-    padding: 10px;
-    background: red;
-    border: none;
-    color: white;
-    cursor: pointer;
-    margin-top: 20px;
-    justify-self:end
-} */
-
-
 @keyframes bonusAppear {
     0% {
         transform: scale(3); 
@@ -1265,6 +1227,19 @@ input {
 .belotte-card:nth-child(13) { top: 65px; transform: rotate(45deg); }
 .belotte-card:nth-child(14) { top: 65px; transform: rotate(45deg); }
 .belotte-card:nth-child(15) { top: 65px; transform: rotate(45deg);  }
+.moving{
+    background-image: url('Assets/point-d-interrogation-or.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: moveLeftToRight 1.5s ease-out forwards;
+    z-index: 1;
+}
+
+
+.shuffle {
+    animation: shuffle 0.5s ease-in-out;
+}
 
 @keyframes moveLeftToRight {
     0% {
@@ -1283,20 +1258,6 @@ input {
         transform: translate(-80vw,40vh) rotateY(360deg); 
         opacity: 0;
     }
-}
-
-.moving{
-    background-image: url('Assets/point-d-interrogation-or.png');
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    animation: moveLeftToRight 1.5s ease-out forwards;
-    z-index: 1;
-}
-
-
-.shuffle {
-    animation: shuffle 0.5s ease-in-out;
 }
 
 @keyframes shuffle {

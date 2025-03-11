@@ -33,16 +33,20 @@ function selectLevel(level) {
 }
 
 function saveConfig() {
-    let player1 = document.getElementById('player1').value;
-    let player2 = document.getElementById('player2') ? document.getElementById('player2').value : 'Bot';
+    let player1 = document.getElementById('player1').value.replace(/\s+/g, '');
+    let player2 = document.getElementById('player2') ? document.getElementById('player2').value.replace(/\s+/g, '') : 'Bot';
+    let erreurMessage = document.getElementById('erreur');
 
     localStorage.setItem('player1', player1);
     localStorage.setItem('player2', player2);
 
-    if((player1 && player1 !== " ") && (player2 && player2 !== " ") && localStorage.getItem('gameLevel')){
-        window.location.href = "game.html"
+    if((player1 && player1 !== " ") && (player2 && player2 !== " ") && localStorage.getItem('gameLevel') ){
+        if (player1.length < 2 || player2.length < 2 ) {
+            erreurMessage.innerText = "Le nom doit dépasser 1 caractère."
+        } else {
+            window.location.href = "game.html";
+        }
     }else {
-        let erreurMessage = document.getElementById('erreur');
         erreurMessage.innerText = "Tous les champs doivent être remplis";
         erreurMessage.style.display = "block"; 
         setTimeout(() => {

@@ -414,26 +414,6 @@ function loadQuestion () {
 
 }
 
-// Gestion du tour des joueurs
-// const setPlayerTurn = (playerTurnIndex) => {
-//     if (playerTurnIndex == null || playerTurnIndex === undefined) {
-//         return
-//     }
-//     let currentTeamTurn = playerTurns[playerTurnIndex];
-//     //Filtering the board details array and finding the currentTeamTurn object
-//     let boardDetailObject = boardDetails.filter(obj => obj.boardColor === currentTeamTurn);
-//     const utterance = new SpeechSynthesisUtterance(`C'est au tour de ${boardDetailObject[0].player} de jouer.`);
-//     utterance.lang = 'fr-FR'; 
-//     boardDetailObject[0].board.classList.toggle('active');
-//     setTimeout(
-//         () => {
-//             speechSynthesis.speak(utterance);
-//             showNotification(`Tour du joueur ${boardDetailObject[0].player} de répondre à une question !  `, "info")
-//         },        
-//         1500
-//     )
-//     loadQuestion()
-// }
 
 const setPlayerTurn = (playerTurnIndex, isActive) => {
     if (playerTurnIndex == null || playerTurnIndex === undefined) {
@@ -645,7 +625,8 @@ const showDangerBonusCard = (bonus, piece) => {
                 document.getElementById('card-container').style.display = 'flex';
 
                 setTimeout(() => {
-                    document.getElementById('card-container').style.display = 'none';
+                    document.getElementById("sidebarHeader").remove();
+                    document.getElementById("card-container").remove();
                     document.getElementById('card').style.display = 'flex';
                     nextTeamTurn();
                 }, 5000);
@@ -656,7 +637,7 @@ const showDangerBonusCard = (bonus, piece) => {
 };
 
 
-// showDangerBonusCard(7, 'y9');
+showDangerBonusCard(7, 'y9');
 
 // Fonction pour déterminer les pas de la piece du jour sur le bord
 const giveArrayForMovingPath = (piece) => {
@@ -670,31 +651,23 @@ const giveArrayForMovingPath = (piece) => {
             if (currentPlayer.hasAnswer) {
                 totalSteps = Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps, piece.position);
-            } else {
-                totalSteps = -4; 
-            }
+            } 
         },
         'y9': () => { 
             if (currentPlayer.hasAnswer) {
                 totalSteps = Math.floor(Math.random() * 5) + 5; // Ajoute 3 pas fixes
                 showDangerBonusCard(totalSteps + 1, piece.position);
-            } else {
-                totalSteps = -1;
-            }
+            } 
         },
         'g9': () => {if (currentPlayer.hasAnswer) {
             totalSteps = Math.floor(Math.random() * 5) + 5; // Ajoute 3 pas fixes
             showDangerBonusCard(totalSteps + 1, piece.position);
-        } else {
-            totalSteps = -1;
-        }
+        } 
         },
         'b9': () => { 
             if (currentPlayer.hasAnswer) {
                 totalSteps += Math.floor(Math.random() * 5) + 5; // Bonus aléatoire (1 à 3)
                 showDangerBonusCard(totalSteps, piece.position);
-            } else {
-                totalSteps = 0
             }
         }
     };
