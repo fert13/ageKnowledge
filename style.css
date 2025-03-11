@@ -425,15 +425,15 @@ canvas{
 .introductionPage button, .configuration-button{
     border-radius: 20px;
     padding: 10px 18px;
-    background: linear-gradient(to right, #f9bc74 20%, #42210b 100%);
+    background: linear-gradient(to right, #f9bc74 5%, #42210b 100%);
     color: white;
     font-size: 15px;
     cursor: pointer;
     border: none;
 }
 
-.introductionPage button:hover, .configuration-button{
-    background: linear-gradient(to right, #f9bc74 2%, #42210b 100%);
+.introductionPage button:hover, .configuration-button:hover{
+    background: linear-gradient(to right, #f9bc74 10%, #42210b 100%);
 }
 
 
