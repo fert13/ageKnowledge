@@ -637,15 +637,9 @@ const showDangerBonusCard = (bonus, piece) => {
 };
 
 
-showDangerBonusCard(7, 'y9');
-
-// Fonction pour déterminer les pas de la piece du jour sur le bord
 const giveArrayForMovingPath = (piece) => {
     let totalSteps = diceResult;
-
     const currentPlayer = boardDetails.find(team => team.boardColor === playerTurns[currentPlayerTurnIndex]);
-
-    // Dictionnaire des effets spéciaux par position
     const specialActions = {
         'r9': () => { 
             if (currentPlayer.hasAnswer) {
@@ -655,18 +649,18 @@ const giveArrayForMovingPath = (piece) => {
         },
         'y9': () => { 
             if (currentPlayer.hasAnswer) {
-                totalSteps = Math.floor(Math.random() * 5) + 5; // Ajoute 3 pas fixes
+                totalSteps = Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps + 1, piece.position);
             } 
         },
         'g9': () => {if (currentPlayer.hasAnswer) {
-            totalSteps = Math.floor(Math.random() * 5) + 5; // Ajoute 3 pas fixes
+            totalSteps = Math.floor(Math.random() * 5) + 5; 
             showDangerBonusCard(totalSteps + 1, piece.position);
         } 
         },
         'b9': () => { 
             if (currentPlayer.hasAnswer) {
-                totalSteps += Math.floor(Math.random() * 5) + 5; // Bonus aléatoire (1 à 3)
+                totalSteps += Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps, piece.position);
             }
         }

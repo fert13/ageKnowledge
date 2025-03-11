@@ -56,7 +56,6 @@ body {
 
 
 
-/* Board */
 #red-Board {
     grid-area: red-Board;
     background-color: var(--red);
@@ -444,7 +443,7 @@ canvas{
     text-align: center;
     border-width: 20px;
     border-style: solid;
-    border-image: url('Assets/image2.png') 30 stretch; /* Bordure avec l'image */
+    border-image: url('Assets/image2.png') 30 stretch; 
     width: 300px;
     height: 450px;
     display: flex;
@@ -1151,7 +1150,6 @@ input {
     width: 300px;
 }
 
-/* Actions boutons */
 .modal-actions {
     display: flex;
     justify-content: space-around;
@@ -1228,7 +1226,6 @@ input {
 .belotte-card:nth-child(14) { top: 65px; transform: rotate(45deg); }
 .belotte-card:nth-child(15) { top: 65px; transform: rotate(45deg);  }
 .moving{
-    background-image: url('Assets/point-d-interrogation-or.png');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
