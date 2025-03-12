@@ -33,7 +33,9 @@ const assets = [
   "Assets/logo.png",
   "Assets/point-d-interrogation-or.png",
   "Assets/rollDice.gif",
-  "Assets/favicon.ico"
+  "Assets/favicon.ico",
+  "404/index.html",
+  ".htaccess"
 ]
 
 self.addEventListener("install", installEvent => {
