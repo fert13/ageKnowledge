@@ -642,7 +642,6 @@ const showDangerBonusCard = (bonus, piece) => {
     }
 };
 
-showDangerBonusCard(8,'r9')
 
 const giveArrayForMovingPath = (piece) => {
     let totalSteps = diceResult;
