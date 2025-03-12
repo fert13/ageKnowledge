@@ -560,6 +560,7 @@ function createCard(value, symbol) {
 
     const card = document.createElement("div");
     card.classList.add("symbolCard");
+    card.setAttribute('id', "symbolCard");
 
     const topLeft = document.createElement("div");
     topLeft.classList.add("corner", "top-left");
@@ -620,23 +621,26 @@ const showDangerBonusCard = (bonus, piece) => {
             moveCard(document.querySelector('.belotte-card:first-child'));
 
             setTimeout(() => { 
-                bonusText.innerText = `+ ${bonus}`;
-                bonusText.classList.add('bonus');
+                bonusText.appendChild(document.createElement('p')).innerText = `+ ${bonus}`;
+                bonusText.appendChild(document.createElement('p')).classList.add('bonus');
                 createCard(bonus, symbols[piece]);
                 document.getElementById('card').style.display = 'none';
                 document.getElementById('card-container').style.display = 'flex';
 
                 setTimeout(() => {
-                    document.getElementById("sidebarHeader").remove();
+                    document.getElementById("sidebarHeader").style.display = 'none';
                     document.getElementById('card-container').style.display = 'none';
+                    document.getElementById('card-container').removeChild(document.getElementById('symbolCard'))
                     document.getElementById('card').style.display = 'flex';
                     nextTeamTurn();
-                }, 500);
+                }, 1000);
 
             }, 800);
-        }, 1000);
+        }, 500);
     }
 };
+
+showDangerBonusCard(8,'r9')
 
 const giveArrayForMovingPath = (piece) => {
     let totalSteps = diceResult;
