@@ -1,11 +1,9 @@
 let numPvP;
 const setNumPvP = (num) => {
     numPvP = num;
-    window.numPvP = numPvP; // Attach numPvP to the global window object
-
-    // Inject a new script element
+    window.numPvP = numPvP; 
     const script = document.createElement('script');
-    script.src = './script.js'; // Replace with the actual path
+    script.src = './script.js'; 
     script.type = 'text/javascript';
     script.async = true;
 

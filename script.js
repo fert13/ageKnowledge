@@ -166,7 +166,7 @@ if (numPvP === 2) {
 //Si le premier joueur n'existe pas, donc il n'y a pas eu de configuration d'ou retour 
 // à la page de configuration
 if(!localStorage.getItem('player1')){
-    window.location = 'configuration.html'
+    window.location = 'configuration'
 }
 
 
@@ -1291,7 +1291,7 @@ document.getElementById("suspendGameBtn").addEventListener("click", () => {
 
     confirmSuspend.addEventListener("click", () => {
         suspendModal.style.display = "none";
-        setTimeout(()=> window.location = "index.html", 1500);
+        setTimeout(()=> window.location = "index", 1500);
     });
 
     cancelSuspend.addEventListener("click", () => {

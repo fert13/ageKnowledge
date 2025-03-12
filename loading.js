@@ -20,7 +20,6 @@ document.getElementById("playButton").addEventListener("click", function () {
     const box = document.querySelector(".box");
     const box2 = document.querySelector(".box2");
 
-    // Ajoute la classe active pour faire tourner box et afficher box2
     box.classList.add("active");
     box.remove()
     if(box.remove()){

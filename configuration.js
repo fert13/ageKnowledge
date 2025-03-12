@@ -44,7 +44,7 @@ function saveConfig() {
         if (player1.length < 2 || player2.length < 2 ) {
             erreurMessage.innerText = "Le nom doit dépasser 1 caractère."
         } else {
-            window.location.href = "game.html";
+            window.location.href = "game";
         }
     }else {
         erreurMessage.innerText = "Tous les champs doivent être remplis";

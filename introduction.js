@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentIndex = 0;
 
     function showNextImage() {
-        images[currentIndex].classList.remove("active"); // Cache l'image actuelle
+        images[currentIndex].classList.remove("active"); 
         currentIndex = (currentIndex + 1) % images.length; 
         images[currentIndex].classList.add("active"); 
     }
@@ -21,7 +21,7 @@ document.getElementById("playButton").addEventListener("click", function () {
 });
 
 document.getElementById("configuration").addEventListener("click", function () {
-    window.location.href = "configuration.html";
+    window.location.href = "configuration";
 });
 
 
