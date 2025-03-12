@@ -15,7 +15,7 @@ const assets = [
   "Assets/sfx/win.wav",
   "Assets/dameOpacité.png",
   "Assets/72X72.png",
-  "Assets/256x256.png",
+  "Assets/152x152.png",
   "Assets/512x512.png",
   "Assets/dé.png",
   "Assets/Dice_1.png",
@@ -32,7 +32,8 @@ const assets = [
   "Assets/interrogatePonctuation.png",
   "Assets/logo.png",
   "Assets/point-d-interrogation-or.png",
-  "Assets/rollDice.gif"
+  "Assets/rollDice.gif",
+  "Assets/favicon.ico"
 ]
 
 self.addEventListener("install", installEvent => {

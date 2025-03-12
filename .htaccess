@@ -1,8 +1,9 @@
-# Activer la réécriture d'URL
 RewriteEngine On
 
-# Supprimer l'affichage de .html dans la barre d'adresse
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html\s [NC]
-RewriteRule ^(.+)\.html$ /$1 [R=301,L]
+# Rediriger le répertoire /TPGIT-TP vers le nouveau domaine
 
-ErrorDocument 404 /404.html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html
+
+ErrorDocument 404 /404/

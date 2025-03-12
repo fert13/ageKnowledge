@@ -123,7 +123,7 @@ for (let i = 0; i < numPvP; i++) {
     let gameEntry = boardDetails[i].gameEntry;
 
     const parentDiv = document.createElement('div');
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 2; i++) {
 
         const span = document.createElement('span');
         const icon = document.createElement('i');
@@ -163,7 +163,8 @@ if (numPvP === 2) {
     playerTurns = ['blue', 'red', 'green', 'yellow']
 }
 
-//Si le premier joueur n'existe pas, donc il n'y a pas eu de configuration d'ou retour à la page de configuration
+//Si le premier joueur n'existe pas, donc il n'y a pas eu de configuration d'ou retour 
+// à la page de configuration
 if(!localStorage.getItem('player1')){
     window.location = 'configuration.html'
 }
@@ -642,26 +643,34 @@ const giveArrayForMovingPath = (piece) => {
     const currentPlayer = boardDetails.find(team => team.boardColor === playerTurns[currentPlayerTurnIndex]);
     const specialActions = {
         'r9': () => { 
-            if (currentPlayer.hasAnswer) {
+            if (currentPlayer.hasAnswer === 'true') {
                 totalSteps = Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps, piece.position);
-            } 
+            } else {
+                totalSteps = -4;
+            }
         },
         'y9': () => { 
             if (currentPlayer.hasAnswer) {
                 totalSteps = Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps + 1, piece.position);
+            } else {
+                totalSteps = 0;
             } 
         },
         'g9': () => {if (currentPlayer.hasAnswer) {
             totalSteps = Math.floor(Math.random() * 5) + 5; 
             showDangerBonusCard(totalSteps + 1, piece.position);
-        } 
+        } else {
+            totalSteps = 0
+        }
         },
         'b9': () => { 
             if (currentPlayer.hasAnswer) {
                 totalSteps += Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps, piece.position);
+            } else {
+                totalSteps =-1
             }
         }
     };

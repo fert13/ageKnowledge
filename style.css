@@ -124,7 +124,6 @@ body {
     height: 80%;
     background: white;
     display: grid;
-    grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     align-items: center;
     justify-items: center;
@@ -627,10 +626,6 @@ canvas{
 }
 
 
-
-
-
-/* ✨ Effet de brillance dorée */
 @keyframes gold-glow {
     0% { text-shadow: 2px 2px 8px rgba(255, 215, 0, 0.4); }
     50% { text-shadow: 4px 4px 15px rgba(255, 215, 0, 0.9); }
