@@ -627,6 +627,7 @@ const showDangerBonusCard = (bonus, piece) => {
                 bonusText.appendChild(p);
                 createCard(bonus, symbols[piece]);
                 document.getElementById('card').style.display = 'none';
+                document.getElementById("sidebarHeader").style.display = 'block';
                 document.getElementById('card-container').style.display = 'flex';
                 setTimeout(() => {
                     document.getElementById("sidebarHeader").style.display = 'none';
@@ -650,49 +651,40 @@ const giveArrayForMovingPath = (piece) => {
         'r9': () => { 
             if (currentPlayer.hasAnswer === 'true') {
                 totalSteps = Math.floor(Math.random() * 5) + 5;
-                calculateMovingPath(piece, totalSteps);
                 showDangerBonusCard(totalSteps, piece.position);
             } else {
                 totalSteps = -4;
-                calculateMovingPath(piece, totalSteps);
             }
         },
         'y9': () => { 
             if (currentPlayer.hasAnswer === 'true') {
                 totalSteps = Math.floor(Math.random() * 5) + 5; 
-                calculateMovingPath(piece, totalSteps);
                 showDangerBonusCard(totalSteps + 1, piece.position);
             } else {
                 totalSteps = 0;
-                calculateMovingPath(piece, totalSteps);
             } 
         },
         'g9': () => {if (currentPlayer.hasAnswer === 'true') {
             totalSteps = Math.floor(Math.random() * 5) + 5; 
-            calculateMovingPath(piece, totalSteps);
             showDangerBonusCard(totalSteps + 1, piece.position);
         } else {
             totalSteps = 0
-            calculateMovingPath(piece, totalSteps);
         }
         },
         'b9': () => { 
             if (currentPlayer.hasAnswer === 'true') {
                 totalSteps += Math.floor(Math.random() * 5) + 5;
-                calculateMovingPath(piece, totalSteps);
                 showDangerBonusCard(totalSteps, piece.position);
             } else {
                 totalSteps =-1
-                calculateMovingPath(piece, totalSteps);
             }
         }
     };
 
     if (specialActions[piece.position]) {
         specialActions[piece.position]();
-    } else {
-        calculateMovingPath(piece, totalSteps);
-    }
+    } 
+    calculateMovingPath(piece, totalSteps);
 };
 
 // Fonction pour calculer le déplacement
