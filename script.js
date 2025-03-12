@@ -621,8 +621,9 @@ const showDangerBonusCard = (bonus, piece) => {
             moveCard(document.querySelector('.belotte-card:first-child'));
 
             setTimeout(() => { 
-                bonusText.appendChild(document.createElement('p')).innerText = `+ ${bonus}`;
-                bonusText.appendChild(document.createElement('p')).classList.add('bonus');
+                document.createElement('p').classList.add('bonus');
+                document.createElement('p').innerText= `+ ${bonus}`;
+                bonusText.appendChild(document.createElement('p'));
                 createCard(bonus, symbols[piece]);
                 document.getElementById('card').style.display = 'none';
                 document.getElementById('card-container').style.display = 'flex';
