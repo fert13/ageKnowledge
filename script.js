@@ -109,6 +109,7 @@ class Player_Piece {
         toAppendDiv.appendChild(element);
     }
 }
+
 let playerPieces = [];
 let boardDetails = [
     { boardColor: 'blue', board: blue_Board, homeEntry: 'y13', gameEntry: 'b1', hasAnswer: localStorage.getItem('blueAnswer'), player: localStorage.getItem('player1') },
@@ -627,17 +628,17 @@ const showDangerBonusCard = (bonus, piece) => {
 
                 setTimeout(() => {
                     document.getElementById("sidebarHeader").remove();
-                    document.getElementById("card-container").remove();
+                    document.getElementById('card-container').style.display = 'none';
                     document.getElementById('card').style.display = 'flex';
                     nextTeamTurn();
-                }, 5000);
+                }, 500);
 
-            }, 1500);
-        }, 2000);
+            }, 800);
+        }, 1000);
     }
 };
 
-
+showDangerBonusCard(8,'r9');
 const giveArrayForMovingPath = (piece) => {
     let totalSteps = diceResult;
     const currentPlayer = boardDetails.find(team => team.boardColor === playerTurns[currentPlayerTurnIndex]);
@@ -722,6 +723,7 @@ const calculateMovingPath = (piece, steps) => {
 const moveElementSequentially = (elementId, array) => {
     const elementToMove = document.querySelector(`[piece_id="${elementId}"]`);
     let currentTeamTurn = playerTurns[currentPlayerTurnIndex];
+    let boardDetailObject = boardDetails.find(obj => obj.boardColor === currentTeamTurn);
     let piece = playerPieces.find(obj => obj.id === elementId);
     let toBreak = false;
 
@@ -744,7 +746,7 @@ const moveElementSequentially = (elementId, array) => {
             toBreak = true;
             let totalPiecesOfThisTeam = playerPieces.filter((obj) => obj.team === currentTeamTurn)
             if (totalPiecesOfThisTeam.length === 0) {
-                declareWinner(currentTeamTurn);
+                declareWinner(boardDetailObject.player);
                 return;
             }
             currentPlayerTurnStatus = true;
@@ -1305,12 +1307,16 @@ const declareWinner = (team) => {
     let childDiv = document.createElement('div');
     let h1 = document.createElement('h1');
     let button = document.createElement('button');
+    let utterance;
 
     parentDiv.setAttribute('id', 'declaredWinner');
 
-    h1.textContent = `${team} Won The Game!`;
+    h1.textContent = `Le joueur ${team} a gagné!`;
+    utterance = new SpeechSynthesisUtterance(`Félicitation !, Le joueur ${team} a gagné!`);
+    utterance.lang = 'fr-FR';
+    speechSynthesis.speak(utterance);
 
-    button.textContent = 'Play Again';
+    button.textContent = 'Rejouer';
     button.addEventListener('click', () => {
         location.reload();
     })

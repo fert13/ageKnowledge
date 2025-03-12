@@ -370,16 +370,18 @@ canvas{
 
 #declaredWinner div{
     width: 550px;
-    background: #1a1a1a;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 9999 !important;
     justify-content: center;
-    border-radius: 6px;
     padding: 20px 10px;
+    background-color: rgb(5, 21, 65);
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px #f9bc74;
+    animation: fade 2s forwards; 
 }
-
+/* 
 #declaredWinner div button{
     padding: 8px 8px;
     font-family: 'Poppins';
@@ -392,7 +394,7 @@ canvas{
     text-transform: uppercase;
     border: none;
     border-radius: 6px;
-}
+} */
 
 
 #homePage {
@@ -420,7 +422,7 @@ canvas{
     font-size: 60px
 }
 
-.introductionPage button, .configuration-button{
+.introductionPage button, .configuration-button, #declaredWinner div button{
     border-radius: 20px;
     padding: 10px 18px;
     background: linear-gradient(to right, #f9bc74 5%, #42210b 100%);
@@ -430,7 +432,7 @@ canvas{
     border: none;
 }
 
-.introductionPage button:hover, .configuration-button:hover{
+.introductionPage button:hover, .configuration-button:hover, #declaredWinner div button:hover{
     background: linear-gradient(to right, #f9bc74 10%, #42210b 100%);
 }
 
@@ -1224,7 +1226,7 @@ input {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    animation: moveLeftToRight 1.5s ease-out forwards;
+    animation: moveLeftToRight 1s ease-out forwards;
     z-index: 1;
 }
 
