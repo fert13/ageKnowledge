@@ -638,7 +638,6 @@ const showDangerBonusCard = (bonus, piece) => {
     }
 };
 
-showDangerBonusCard(8,'r9');
 const giveArrayForMovingPath = (piece) => {
     let totalSteps = diceResult;
     const currentPlayer = boardDetails.find(team => team.boardColor === playerTurns[currentPlayerTurnIndex]);
