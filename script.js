@@ -8,7 +8,6 @@ const green_Board = document.getElementById("green-Board");
 const red_Board = document.getElementById("red-Board");
 const yellow_Board = document.getElementById("yellow-Board");
 
-
 //DOMs
 const rollDiceButton = document.getElementById('rollDiceButton');
 const rollDice = document.getElementById('rollDice');
