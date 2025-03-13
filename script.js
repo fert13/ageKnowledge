@@ -648,24 +648,25 @@ const giveArrayForMovingPath = (piece) => {
     const currentPlayer = boardDetails.find(team => team.boardColor === playerTurns[currentPlayerTurnIndex]);
     const specialActions = {
         'r9': () => { 
-            if (currentPlayer.hasAnswer) {
+            if (currentPlayer.hasAnswer ==='true') {
                 totalSteps = Math.floor(Math.random() * 5) + 5;
                 showDangerBonusCard(totalSteps, piece.position);
+                console.log("je suis ici")
             } 
         },
         'y9': () => { 
-            if (currentPlayer.hasAnswer) {
+            if (currentPlayer.hasAnswer ==='true') {
                 totalSteps = Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps + 1, piece.position);
             } 
         },
-        'g9': () => {if (currentPlayer.hasAnswer) {
+        'g9': () => {if (currentPlayer.hasAnswer === 'true') {
             totalSteps = Math.floor(Math.random() * 5) + 5; 
             showDangerBonusCard(totalSteps + 1, piece.position);
         } 
         },
         'b9': () => { 
-            if (currentPlayer.hasAnswer) {
+            if (currentPlayer.hasAnswer === 'true') {
                 totalSteps += Math.floor(Math.random() * 5) + 5;
                 showDangerBonusCard(totalSteps, piece.position);
             }
