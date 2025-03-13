@@ -429,7 +429,7 @@ const setPlayerTurn = (playerTurnIndex, isActive) => {
 
         const utterance = new SpeechSynthesisUtterance(`C'est au tour de ${boardDetailObject.player} de jouer.`);
         utterance.lang = 'fr-FR';
-        // speechSynthesis.speak(utterance);
+        speechSynthesis.speak(utterance);
 
         showNotification(`Tour du joueur ${boardDetailObject.player} de répondre à une question !`, "info");
     } else {
@@ -452,7 +452,7 @@ const teamAnswer = (selectedOption, teamColor) => {
             setTimeout(() => {
                 let reponse = new SpeechSynthesisUtterance("Bonne réponse, lancer le dé !")
                 reponse.lang = 'fr-FR';
-                // speechSynthesis.speak(reponse);
+                speechSynthesis.speak(reponse);
                 showNotification("Lancer le dé ", "success");
             }, 1000);
             if(teamColor !== 'blue' && localStorage.getItem('gameMode') === 'bot'){
