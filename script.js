@@ -622,6 +622,7 @@ const showDangerBonusCard = (bonus, piece) => {
             setTimeout(() => { 
                 let p = document.createElement('p')
                 p.classList.add('bonus');
+                p.setAttribute('id','bonusId')
                 p.innerText= `+ ${bonus}`;
                 bonusText.appendChild(p);
                 createCard(bonus, symbols[piece]);
@@ -631,6 +632,7 @@ const showDangerBonusCard = (bonus, piece) => {
                 setTimeout(() => {
                     document.getElementById("sidebarHeader").style.display = 'none';
                     document.getElementById('card-container').style.display = 'none';
+                    document.getElementById("sidebarHeader").removeChild(document.getElementById('bonusId'))
                     document.getElementById('card-container').removeChild(document.getElementById('symbolCard'))
                     document.getElementById('card').style.display = 'flex';
                     nextTeamTurn();
