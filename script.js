@@ -650,31 +650,23 @@ const giveArrayForMovingPath = (piece) => {
             if (currentPlayer.hasAnswer) {
                 totalSteps = Math.floor(Math.random() * 5) + 5;
                 showDangerBonusCard(totalSteps, piece.position);
-            } else {
-                totalSteps = -4;
-            }
+            } 
         },
         'y9': () => { 
             if (currentPlayer.hasAnswer) {
                 totalSteps = Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps + 1, piece.position);
-            } else {
-                totalSteps = 0;
             } 
         },
         'g9': () => {if (currentPlayer.hasAnswer) {
             totalSteps = Math.floor(Math.random() * 5) + 5; 
             showDangerBonusCard(totalSteps + 1, piece.position);
-        } else {
-            totalSteps = 0
-        }
+        } 
         },
         'b9': () => { 
             if (currentPlayer.hasAnswer) {
                 totalSteps += Math.floor(Math.random() * 5) + 5;
                 showDangerBonusCard(totalSteps, piece.position);
-            } else {
-                totalSteps =-1
             }
         }
     };
