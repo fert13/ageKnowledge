@@ -647,7 +647,7 @@ const giveArrayForMovingPath = (piece) => {
     const currentPlayer = boardDetails.find(team => team.boardColor === playerTurns[currentPlayerTurnIndex]);
     const specialActions = {
         'r9': () => { 
-            if (currentPlayer.hasAnswer === 'true') {
+            if (currentPlayer.hasAnswer) {
                 totalSteps = Math.floor(Math.random() * 5) + 5;
                 showDangerBonusCard(totalSteps, piece.position);
             } else {
@@ -655,14 +655,14 @@ const giveArrayForMovingPath = (piece) => {
             }
         },
         'y9': () => { 
-            if (currentPlayer.hasAnswer === 'true') {
+            if (currentPlayer.hasAnswer) {
                 totalSteps = Math.floor(Math.random() * 5) + 5; 
                 showDangerBonusCard(totalSteps + 1, piece.position);
             } else {
                 totalSteps = 0;
             } 
         },
-        'g9': () => {if (currentPlayer.hasAnswer === 'true') {
+        'g9': () => {if (currentPlayer.hasAnswer) {
             totalSteps = Math.floor(Math.random() * 5) + 5; 
             showDangerBonusCard(totalSteps + 1, piece.position);
         } else {
@@ -670,7 +670,7 @@ const giveArrayForMovingPath = (piece) => {
         }
         },
         'b9': () => { 
-            if (currentPlayer.hasAnswer === 'true') {
+            if (currentPlayer.hasAnswer) {
                 totalSteps += Math.floor(Math.random() * 5) + 5;
                 showDangerBonusCard(totalSteps, piece.position);
             } else {
@@ -683,7 +683,7 @@ const giveArrayForMovingPath = (piece) => {
         specialActions[piece.position]();
     }
 
-  return  calculateMovingPath(piece, totalSteps);
+  return calculateMovingPath(piece, totalSteps);
 };
 
 // Fonction pour calculer le déplacement
@@ -848,6 +848,7 @@ const turnForBot = async () => {
         }
 
         let array = giveArrayForMovingPath(totalUnlockedPieces[i]);
+        console.log(array)
         let cut = opponentPieces.find(obj => obj.position === array[array.length - 1] && !safePaths.includes(obj.position));
         let homeBonusReached = array[array.length - 1] === 'home'; //If the last path is home
         if (cut) {
@@ -1083,6 +1084,8 @@ const turnForUser = async (e) => {
     let piece = playerPieces.find((obj => obj.id === e.target.getAttribute('piece_id') && obj.team === currentTeamTurn));
     let opponentPieces = playerPieces.filter(obj => obj.team !== currentTeamTurn && obj.status === 1);
     let array = giveArrayForMovingPath(piece);
+
+    console.log(array)
 
     let cut = opponentPieces.find(obj => obj.position === array[array.length - 1] && !safePaths.includes(obj.position));
 
