@@ -72,7 +72,6 @@ class Player_Piece {
         movePieceAudio.play();
         toAppendDiv.appendChild(element);
     }
-
     updatePosition(position) {
         this.position = position;
     }
@@ -682,8 +681,9 @@ const giveArrayForMovingPath = (piece) => {
 
     if (specialActions[piece.position]) {
         specialActions[piece.position]();
-    } 
-    calculateMovingPath(piece, totalSteps);
+    }
+
+  return  calculateMovingPath(piece, totalSteps);
 };
 
 // Fonction pour calculer le déplacement
