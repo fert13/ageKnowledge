@@ -29,7 +29,7 @@ function saveConfig() {
     localStorage.setItem('player2', player2);
 
     if((player1 && player1 !== " ") && (player2 && player2 !== " ") && localStorage.getItem('gameLevel')){
-        window.location.href = "game.html"
+        window.location.href = "animation.html"
     }else {
         return 
     }
